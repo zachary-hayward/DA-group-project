@@ -4,41 +4,41 @@ import { screen, render } from '@testing-library/react'
 
 import App from './App'
 import store from '../store'
-import { fetchFruits } from '../actions'
+// import { fetchFruits } from '../actions'
 
-jest.mock('../actions')
+// jest.mock('../actions')
 
-fetchFruits.mockImplementation(() => () => {})
+// fetchFruits.mockImplementation(() => () => {})
 
-test('page header includes fruit', () => {
+test('page header includes app name', () => {
   render(
     <Provider store={store}>
       <App />
     </Provider>
   )
   const heading = screen.getByRole('heading')
-  expect(heading.innerHTML).toMatch(/Fruit/)
+  expect(heading.innerHTML).toMatch('Kes-Ke-Say')
 })
 
-test('renders an <li> for each fruit', () => {
-  const fruits = ['orange', 'persimmons', 'kiwi fruit']
-  jest.spyOn(store, 'getState')
-  store.getState.mockImplementation(() => ({ fruits }))
+// test('renders an <li> for each fruit', () => {
+//   const fruits = ['orange', 'persimmons', 'kiwi fruit']
+//   jest.spyOn(store, 'getState')
+//   store.getState.mockImplementation(() => ({ fruits }))
 
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  )
-  const li = screen.getAllByRole('listitem')
-  expect(li).toHaveLength(3)
-})
+//   render(
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   )
+//   const li = screen.getAllByRole('listitem')
+//   expect(li).toHaveLength(3)
+// })
 
-test('dispatches fetchFruits action', () => {
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  )
-  expect(fetchFruits).toHaveBeenCalled()
-})
+// test('dispatches fetchFruits action', () => {
+//   render(
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   )
+//   expect(fetchFruits).toHaveBeenCalled()
+// })
