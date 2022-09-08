@@ -1,6 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap');
+
+/**
+ * This injects Tailwind's base styles and any base styles registered by
+ * plugins.
+ */
+ @tailwind base;
+
+ /**
+  * This injects Tailwind's component classes and any component classes
+  * registered by plugins.
+  */
+ @tailwind components;
+ 
+ /**
+  * This injects Tailwind's utility classes and any utility classes registered
+  * by plugins.
+  */
+ @tailwind utilities;
+ 
+ /**
+  * Use this directive to control where Tailwind injects the hover, focus,
+  * responsive, dark mode, and other variants of each class.
+  *
+  * If omitted, Tailwind will append these classes to the very end of
+  * your stylesheet by default.
+  */
+ @tailwind variants;
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+    font-family: 'Rubik Mono One', sans-serif;
+  }
+  h2 {
+    @apply text-xl;
+    font-family: 'Rubik Mono One', sans-serif;
+  }
+  
+}
+
+@layer components {
+  .btn-blue {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+  }
+}
 
 html, 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Overpass Mono', monospace;
 }
+
