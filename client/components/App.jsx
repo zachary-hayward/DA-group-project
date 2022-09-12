@@ -6,8 +6,7 @@ import UserHomePage from './UserHomePage'
 function App() {
   return (
     <>
-      {/* <LandingPage /> */}
-      <UserHomePage />
+      <LandingPage />
     </>
   )
 }
