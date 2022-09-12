@@ -8,7 +8,7 @@ import store from '../../store'
 import Footer from '../Footer'
 
 describe('<Footer/>', () => {
-  it.todo('renders something soon...', () => {
+  it.skip('renders something soon...', () => {
     render(
       <Provider store={store}>
         <Router>
