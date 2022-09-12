@@ -1,14 +1,12 @@
 import React from 'react'
+import styles from './LandingPage.module.css'
 
 function LandingPage() {
   return (
     <>
       <div className="h-screen">
-        <div
-          className="w-full h-full bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: `url(/images/hero/hero-2.png)` }}
-        >
-          <div className="deconstructed flex items-center max-w-fit mx-auto">
+        <div className="w-full h-full bg-no-repeat bg-cover bg-center" style={{ backgroundImage: `url(/images/hero/hero-2.png)` }}>
+          <div className={`${styles.deconstructed} ${styles.centered}`}>
             Kes-Ke-Say
             <div>Kes-Ke-Say</div>
             <div>Kes-Ke-Say</div>
@@ -25,3 +23,7 @@ function LandingPage() {
 }
 
 export default LandingPage
+
+{/* <button className="btn-blue">
+Sign Up
+</button> */}
