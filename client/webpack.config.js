@@ -1,36 +1,31 @@
 const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  entry: ['./client/index.js', './client/styles/index.scss'],
+  entry: path.join(__dirname, './index.js'),
   output: {
-    path: path.join(__dirname, '..', 'server', 'public'),
+    path: path.join(__dirname, '../server/public'),
     filename: 'bundle.js',
   },
   mode: 'development',
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'styles.css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
-  ],
   module: {
     rules: [
       {
-        test: /\.(j|t)sx?$/,
         loader: 'babel-loader',
+        test: /.(j|t)sx?$/,
         exclude: /node_modules/,
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          'css-loader',
-          'sass-loader',
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
         ],
+        include: /\.module\.css$/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        exclude: /\.module\.css$/,
       },
     ],
   },
@@ -39,3 +34,28 @@ module.exports = {
   },
   devtool: 'source-map',
 }
+
+// const path = require('path')
+// module.exports = {
+//   mode: 'production',
+//   entry: './src/index.js',
+//   output: { path: path.resolve(__dirname, 'dist'), filename: 'bundle.js' },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.js$/i,
+//         include: path.resolve(__dirname, 'src'),
+//         use: {
+//           loader: 'babel-loader',
+//           options: { presets: ['@babel/preset-env'] },
+//         },
+//       },
+//       {
+//         test: /\.css$/i,
+//         include: path.resolve(__dirname, 'src'),
+//         use: ['style-loader', 'css-loader', 'postcss-loader'],
+//       },
+//     ],
+//   },
+//   devServer: { static: 'dist', watchContentBase: true },
+// }
