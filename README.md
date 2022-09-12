@@ -13,20 +13,24 @@ npm run dev
 ```
 You can find the server running on [http://localhost:3000](http://localhost:3000).
 
-To kickstart the project, we have provided you with a temporary landing page, plus knex migrations and seeds. Here is what you should see in your browser.
+To kickstart the project, we have provided you with a landing page, a temporary user homepage plus knex migrations and seeds. Here is what you should see in your browser.
 
 ![Landing Page]()
 
+![User Home Page]()
 ## Gotchas
 
 A few notes to keep you out of trouble:
 - When running knex, run `npm run knex <command>`, e.g. `npm run knex migrate:latest` rather than using `npx`
 - When running webpack, run `npm run webpack <extra commands>`, e.g. `npm run webpack`, rather than using `npx`
-- MAYBE: This repo is set up for SCSS (aka "sass" style CSS) with CSS Modules. The global styles live in `/client/styles/index.scss` but for each component you create a css module that you can import and create component specific styling. See `App.jsx` and `App.module.css` for example setup.
+- This repo is set up for Tailwind CSS with CSS Modules. The global styles live in `/client/styles/index.css` but for each component you create a css module that you can import and create component specific styling. See `LandingPage.jsx` and `LandingPage.module.css` for example setup.
+- Install the extension 'Tailwind CSS IntelliSense' for VS Code to help with styling inline.
+
+![Tailwind CSS Extension](server/readme-screenshots/TailwwindCSSIntellisense.png)
 ___
 ## About Kes-Ke-Say
 
-  ![Cool Beans Logo]() 
+  ![Kes-Ke-Say Logo]() 
 
 A message from the product owners:
 > _Our vision for Kes-Ke-Say..._
@@ -83,7 +87,7 @@ __Items table -__
 
 1.  Build an API (back end route) to get the information from your database
 
-  ![Full-stack with Database Diagram]()
+  ![Full-stack with Database Diagram](server/readme-screenshots/fullstack-diagram.png)
 
 2.  Test your API with [Insomnia](https://insomnia.rest/)
 
@@ -126,5 +130,5 @@ Here is an example of what we would like to see with regards to testing coverage
 ## Other Tips for Cool Beans
 - Have fun ㋡
 - Pace yourself
-- Take breaks, go touch some grass
+- Take breaks, touch some grass
 - Dream big!

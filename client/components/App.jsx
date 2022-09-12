@@ -1,11 +1,11 @@
 import React from 'react'
-import MockHomepage from './MockHomepage'
+import LandingPage from './LandingPage'
 
 function App() {
  
   return (
     <>
-      <MockHomepage />
+      <LandingPage />
     </>
   )
 }
