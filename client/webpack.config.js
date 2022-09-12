@@ -14,6 +14,19 @@ module.exports = {
         test: /.(j|t)sx?$/,
         exclude: /node_modules/,
       },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+        ],
+        include: /\.module\.css$/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        exclude: /\.module\.css$/,
+      },
     ],
   },
   resolve: {
@@ -21,3 +34,28 @@ module.exports = {
   },
   devtool: 'source-map',
 }
+
+// const path = require('path')
+// module.exports = {
+//   mode: 'production',
+//   entry: './src/index.js',
+//   output: { path: path.resolve(__dirname, 'dist'), filename: 'bundle.js' },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.js$/i,
+//         include: path.resolve(__dirname, 'src'),
+//         use: {
+//           loader: 'babel-loader',
+//           options: { presets: ['@babel/preset-env'] },
+//         },
+//       },
+//       {
+//         test: /\.css$/i,
+//         include: path.resolve(__dirname, 'src'),
+//         use: ['style-loader', 'css-loader', 'postcss-loader'],
+//       },
+//     ],
+//   },
+//   devServer: { static: 'dist', watchContentBase: true },
+// }

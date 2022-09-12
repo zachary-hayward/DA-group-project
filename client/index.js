@@ -6,6 +6,8 @@ import store from './store'
 
 import App from './components/App'
 
+import './styles/index.css'
+
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <Provider store={store}>
