@@ -17,13 +17,10 @@ function LandingPage() {
             Sign Up
           </button>
         </div>
+        
       </div>
     </>
   )
 }
 
 export default LandingPage
-
-{/* <button className="btn-blue">
-Sign Up
-</button> */}

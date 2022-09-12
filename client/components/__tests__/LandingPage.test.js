@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import store from '../../store'
 import LandingPage from '../LandingPage'
 
+
 describe('<LandingPage />', () => {
   it('renders a button that has a <button> html tag and a class name', () => {
     render(
@@ -19,6 +20,7 @@ describe('<LandingPage />', () => {
     const button = screen.getByRole('button', { name: /Sign Up/ })
     expect(button).toContainHTML('button')
     expect(button).toHaveClass('flex')
+    // expect class names that come from the css module
     expect.assertions(2)
   })
 })
