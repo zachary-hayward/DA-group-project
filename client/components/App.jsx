@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
+import React from 'react'
+import { Route } from 'react-router-dom'
+import LandingPage from './LandingPage'
+import UserHomePage from './UserHomePage'
 
 function App() {
- 
-
   return (
     <>
-      <div className="app">
-        <h1>Kes-Ke-Say</h1>
-      </div>
+      {/* <LandingPage /> */}
+      <UserHomePage />
     </>
   )
 }
