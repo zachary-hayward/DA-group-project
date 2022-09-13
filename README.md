@@ -54,13 +54,6 @@ The above user stories will strongly guide this build but ultimately, the initia
 
 If you think you might need more than one database table, or have lots of details you want to store, how could you simplify the information you're keeping track of? Leave more complex data until later in the project.
 
-For example, my data might look like:
-
-|id|title|description|
-|---|---|---|
-| 1 | Cow | A bovine creature, good condition |
-| 2 | Hay Bale | A large bundle of raw straw, new, good price |
-
 Our first job is getting something showing on the front end from our database. Here's a list of steps in case they are useful. You can build in any order you like.
 
 ## Back End
@@ -83,7 +76,6 @@ __Posts table -__
   |---|---|---|---|---|
  |1|1|'I found this really interesting book, you should check it out'|''|new Date(Date.now())|
  |2|1|'I found this really cool Italian place, they have the best food'|''|new Date(Date.now())|
-
 
 
 

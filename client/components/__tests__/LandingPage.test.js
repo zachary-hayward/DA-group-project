@@ -19,8 +19,7 @@ describe('<LandingPage />', () => {
     )
     const button = screen.getByRole('button', { name: /Sign Up/ })
     expect(button).toContainHTML('button')
-    expect(button).toHaveClass('flex')
-    // expect class names that come from the css module
+    expect(button).toHaveClass('px-8')
     expect.assertions(2)
   })
 })
