@@ -15,9 +15,9 @@ You can find the server running on [http://localhost:3000](http://localhost:3000
 
 To kickstart the project, we have provided you with a landing page, a temporary user homepage plus knex migrations and seeds. Here is what you should see in your browser.
 
-![Landing Page]()
+![Landing Page](server/readme-screenshots/landingpage.png)
 
-![User Home Page]()
+![User Home Page](server/readme-screenshots/userhomepage.png)
 ## Gotchas
 
 A few notes to keep you out of trouble:
