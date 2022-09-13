@@ -30,22 +30,42 @@ A few notes to keep you out of trouble:
 ___
 ## About Kes-Ke-Say
 
-  ![Kes-Ke-Say Logo]() 
+Kes-Ke-Say (***qu'est-ce que c'est***) is a social sharing platform by DEV Academy's own Jean Pierre.
 
-A message from the product owners:
-> _Our vision for Kes-Ke-Say..._
+
+The meaning of ***QU'EST-CE QUE C'EST?*** is what is it? : what's that?
+
+
+It is a chic new social media outlet that is proudly ad and pop-up free, no marketplace or sneaky commerce - just socialising, the way it used to be! Times are tough so this new platform is for those who want to share - and perhaps even complain a little - with like minded individuals.
+
+Jean Pierre is very proudly French and a fan of all things design. This project is heavily driven by Jean Pierres vision as he is an opinionated Product Owner.
 
 ## User Stories
 
-__As a user I want to...__
+__As a non registered/logged in user, Jean Pierre would like...__
 
-- View a landing page with a welcome message
+To see a locked down landing page asking me to register, then sign in. I will learn nothing about the social media platform from the landing page as its exclusive. If you know, you know.
 
-- Login to an app using auth0 so that I have a secure and personalized profile (if registering for the first time go to profile page to complete details)
+__As a registered/logged in user, Jean Pierre would like...__
 
-- See a user specific homepage where you can see ...
+To have access to a dashboard user homepage that shows:
+- general navigation
+- the weather in my location
+- the local time in my location
+- a link to view a national news feed
+- the option to create a post
+- the most recent posts made by all users
+- the option to view individual posts
 
-- See my personal profile ...
+In a separate sections, users need to also have access to:
+- the option to view and edit my own profile
+- the option to select an avatar to personalise my profile
+- the option to view all users
+
+Similarly, users need to also have access to groups. Groups are for like minded individuals to come together and rally around a certain passion or dislike. Users need to have access to:
+- the option to view and edit a group
+- the option to join and view a group
+- the option to view all possible groups to join
 
 ___
 ## Let's Build It
