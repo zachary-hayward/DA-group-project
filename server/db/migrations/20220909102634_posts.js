@@ -5,7 +5,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('posts', (table) => {
     table.increments('id')
-    table.integer('user_id')
+    table.string('auth0_id')
     table.text('body')
     table.text('image')
     table.timestamp('created_at')
