@@ -13,11 +13,15 @@ function LandingPage() {
             <div>Kes-Ke-Say</div>
             <div>Kes-Ke-Say</div>
           </div>
-          <button className="btn-blue flex items-center max-w-fit mx-auto">
+          <div className="flex justify-center">
+          <button className="btn-blue px-8 mx-8">
             Sign Up
           </button>
+          <button className="btn-blue px-8 mx-8">
+            Log In
+          </button>
         </div>
-        
+        </div>
       </div>
     </>
   )

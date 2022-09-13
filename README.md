@@ -15,15 +15,15 @@ You can find the server running on [http://localhost:3000](http://localhost:3000
 
 To kickstart the project, we have provided you with a landing page, a temporary user homepage plus knex migrations and seeds. Here is what you should see in your browser.
 
-![Landing Page]()
+![Landing Page](server/readme-screenshots/landingpage.png)
 
-![User Home Page]()
+![User Home Page](server/readme-screenshots/userhomepage.png)
 ## Gotchas
 
 A few notes to keep you out of trouble:
 - When running knex, run `npm run knex <command>`, e.g. `npm run knex migrate:latest` rather than using `npx`
 - When running webpack, run `npm run webpack <extra commands>`, e.g. `npm run webpack`, rather than using `npx`
-- This repo is set up for Tailwind CSS with CSS Modules. The global styles live in `/client/styles/index.css` but for each component you create a css module that you can import and create component specific styling. See `LandingPage.jsx` and `LandingPage.module.css` for example setup.
+- This repo is set up for Tailwind CSS with CSS Modules. We would like you to use Tailwind inline styling for the most part. If your feature requires some additional non Tailwind CSS you can use a CSS module. The global styles live in `/client/styles/index.css` but for each component you create a css module that you can import and create component specific styling. See `LandingPage.jsx` and `LandingPage.module.css` for example setup. Please do not make changes to the global styles without consulting the team.
 - Install the extension 'Tailwind CSS IntelliSense' for VS Code to help with styling inline.
 
 ![Tailwind CSS Extension](server/readme-screenshots/TailwwindCSSIntellisense.png)
@@ -54,35 +54,29 @@ The above user stories will strongly guide this build but ultimately, the initia
 
 If you think you might need more than one database table, or have lots of details you want to store, how could you simplify the information you're keeping track of? Leave more complex data until later in the project.
 
-For example, my data might look like:
-
-|id|title|description|
-|---|---|---|
-| 1 | Cow | A bovine creature, good condition |
-| 2 | Hay Bale | A large bundle of raw straw, new, good price |
-
 Our first job is getting something showing on the front end from our database. Here's a list of steps in case they are useful. You can build in any order you like.
 
 ## Back End
 
-1.  Design a database to store a list of your things (e.g. users, items)
+1.  Design a database to store a list of your things (e.g. users, posts)
 
-  ![Database diagram]()
+  ![Database diagram](server/readme-screenshots/db-diagram.png)
 
 
 2.  Build the migrations and seed data
 
 __Users table -__
-  |auth0_id|name|location|bio|avatar|beans|
-  |---|---|---|---|---|---|
-  | 001 | Jack Spriggins | Glenorchy | I will trade for beans, particularly if they are magical | jack.png | 10 |
- 
+  |id|username|full_name|location|image|
+  |---|---|---|---|---|
+  | 1 | 'paige' | 'Paige Turner' | 'Auckland' | 'ava_01.png'' |
 
-__Items table -__
-  |id|user_id|title|description|trade_value|image|status|
-  |---|---|---|---|---|---|---|
-  |1|001|Cow|A bovine creature, good condition|$500 NZD|cow.png|Active|
-  |2|001|Axe|Chop some beanstalks, good condition|$200 NZD|axe.png|Active|
+ 
+__Posts table -__
+  |id|user_id|body|image|created_at|
+  |---|---|---|---|---|
+ |1|1|'I found this really interesting book, you should check it out'|''|new Date(Date.now())|
+ |2|1|'I found this really cool Italian place, they have the best food'|''|new Date(Date.now())|
+
 
 
 1.  Build an API (back end route) to get the information from your database
@@ -96,7 +90,8 @@ __Items table -__
 1.  Build a React Component with static html
 2.  Build Redux Reducer. Start with a hardcoded initial state, for example:
 ```js
-const initialState = [{ id: 1, title: 'Cow', description: 'A bovine creature, good condition' }]
+const initialState = [{id: 1, user_id: 1, body: 'I found this really interesting book, you should check it out', image: '', created_at: new Date(Date.now())},
+]
 ```
 3.  Use `useSelector` to display the redux state you hardcoded in the React Component
 4.  Build an API Client in the front end to request the information from your routes
@@ -125,9 +120,13 @@ Simply run `npm test -- --coverage` to see your coverage stats. Uncovered lines 
 
 Here is an example of what we would like to see with regards to testing coverage:
 
-  ![Testing Coverage]()
+  ![Testing Coverage](server/readme-screenshots/coverage.png)
 
-## Other Tips for Cool Beans
+If you're unsure about where to start with a test, refer to the Pikopiko 2022 Miro board diagram by Week 7.
+
+ ![Testing Diagram](server/readme-screenshots/testing-diagram.png)
+
+## Other Tips for Kes-Ke-Say
 - Have fun ㋡
 - Pace yourself
 - Take breaks, touch some grass
