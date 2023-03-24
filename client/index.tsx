@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import store from './store'
@@ -9,12 +8,11 @@ import App from './components/App'
 import './styles/index.css'
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router>
+  createRoot(document.getElementById('app') as HTMLElement).render(
+    <Router>
+      <Provider store={store}>
         <App />
-      </Router>
-    </Provider>,
-    document.getElementById('app')
+      </Provider>
+    </Router>
   )
 })
