@@ -17,7 +17,7 @@
     "dev:css": "tailwindcss -i ./client/styles/index.css -o ./server/public/styles.css --watch",
     "build:client": "npm run webpack -- --mode production",
     "build:server": "npm run knex -- migrate:latest",
-    "lint": "eslint --ext .js,.jsx, .tsx, .ts .",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "webpack": "webpack --config ./client/webpack.config.js",
     "knex": "knex --knexfile ./server/db/knexfile.js"
   },
@@ -39,7 +39,7 @@
     ]
   },
   "eslintConfig": {
-    "extends": "eda/react",
+    "extends": "@devacademy/eslint-config/react",
     "ignorePatterns": [
       "bundle.js"
     ]
