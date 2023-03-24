@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: path.join(__dirname, './index.js'),
+  entry: path.join(__dirname, './index.tsx'),
   output: {
     path: path.join(__dirname, '../server/public'),
     filename: 'bundle.js',
@@ -34,28 +34,3 @@ module.exports = {
   },
   devtool: 'source-map',
 }
-
-// const path = require('path')
-// module.exports = {
-//   mode: 'production',
-//   entry: './src/index.js',
-//   output: { path: path.resolve(__dirname, 'dist'), filename: 'bundle.js' },
-//   module: {
-//     rules: [
-//       {
-//         test: /\.js$/i,
-//         include: path.resolve(__dirname, 'src'),
-//         use: {
-//           loader: 'babel-loader',
-//           options: { presets: ['@babel/preset-env'] },
-//         },
-//       },
-//       {
-//         test: /\.css$/i,
-//         include: path.resolve(__dirname, 'src'),
-//         use: ['style-loader', 'css-loader', 'postcss-loader'],
-//       },
-//     ],
-//   },
-//   devServer: { static: 'dist', watchContentBase: true },
-// }
