@@ -115,8 +115,9 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|glb|gltf)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "identity-obj-proxy"
     },
+    "moduleFileExtensions": ["js", "jsx", "ts", "tsx"],
     "testEnvironment": "jsdom",
-    "transformIgnorePatterns": ["node_modules/(?!(@react-three/drei)/)"]
+    "transformIgnorePatterns": ["/node_modules/(?!(@react-three/drei)/)"]
   },
   "browserslist": "> 2%, not dead"
 }
