@@ -1,18 +1,29 @@
+/* eslint-disable react/no-unknown-property */
 import * as THREE from 'three'
 import { useRef, useState } from 'react'
 import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { useGLTF, Detailed, Environment } from '@react-three/drei'
 import { EffectComposer, DepthOfField } from '@react-three/postprocessing'
 
-function Croissant({ index, z, speed }) {
-  const ref: object = useRef()
+export interface Positioning {
+  index: number
+  z: number
+  speed: number
+}
 
-  const { viewport, camera } = useThree()
+export interface CroissantData {
+  nodes: {Croissant_HIGH: {geometry: THREE.BufferGeometry}, Croissant_LOW:{geometry: THREE.BufferGeometry} }
+  materials: {Croissant_LOW: THREE.Material }
+}
+
+function Croissant({ index, z, speed }: Positioning) {
+  // const ref = useRef() as MutableRefObject<object>
+  const ref = useRef(null as null | THREE.LOD)
+  const { viewport, camera } = useThree()               
  
   const { width, height } = viewport.getCurrentViewport(camera, [0, 0, -z])
 
-  const { nodes, materials } = useGLTF('images/Croissant_Default.gltf')
-  
+  const { nodes, materials } = useGLTF('images/Croissant_Default.gltf') as unknown as CroissantData
  
   const [data] = useState({
     // Randomly distributing croissants vertically
@@ -27,13 +38,15 @@ function Croissant({ index, z, speed }) {
   })
   // useFrame executes 60 times per second
   useFrame((state, dt) => {
+    const lod = ref.current
+
+    if (lod == null) return 
     // Make the X position responsive, slowly scroll objects up at the Y, distribute it along the Z
     // dt is the delta, the time between this frame and the previous, we can use it to be independent of the screens refresh rate
     // We cap dt at 0.1 because now it can't accumulate while the user changes the tab, it will simply stop
-    if (dt < 0.1) ref.current.position.set(index === 0 ? 0 : data.x * width, (data.y += dt * speed), -z)
-   
+    if (dt < 0.1) lod.position.set(index === 0 ? 0 : data.x * width, (data.y += dt * speed), -z)
     // Rotate the object around
-    ref.current.rotation.set((data.rX += dt / data.spin), Math.sin(index * 1000 + state.clock.elapsedTime / 10) * Math.PI, (data.rZ += dt / data.spin))
+    lod.rotation.set((data.rX += dt / data.spin), Math.sin(index * 1000 + state.clock.elapsedTime / 10) * Math.PI, (data.rZ += dt / data.spin))
     // Once they reach the top, send them again to the bottom
     if (data.y > height * (index === 0 ? 4 : 1)) data.y = -(height * (index === 0 ? 4 : 1))
   })
