@@ -109,15 +109,39 @@ __Posts table -__
 
 1.  Build a React Component with static html
 2.  Build Redux Reducer. Start with a hardcoded initial state, for example:
-```js
-const initialState = [{id: 1, user_id: 1, body: 'I found this really interesting book, you should check it out', image: '', created_at: new Date(Date.now())},
-]
+```ts
+interface UsersState {
+  users: User[]
+  isLoading: boolean
+  error: string | null
+}
+
+const initialState: UsersState = {
+  users: [{
+		id: 1,
+		auth0Id: 'auth0|123',
+		username: 'paige',
+		fullName: 'Paige Turner',
+		location: 'Auckland',
+		image: 'ava-03.png'
+	},
+	{
+		id: 2,
+		auth0Id: 'auth0|234',
+		username: 'ida',
+		fullName: 'Ida Dapizza',
+		location: 'Auckland',
+		image: 'ava-02.png'
+	}],
+  isLoading: false,
+  error: null,
+}
 ```
-3.  Use `useSelector` to display the redux state you hardcoded in the React Component
+3.  Use `useAppSelector` to display the redux state you hardcoded in the React Component
 4.  Build an API Client in the front end to request the information from your routes
 5.  Build Thunk Actions to use the API and get the information
 6.  Build Redux Actions to save task data from the thunk
-7.  Use `useDispatch` and `useEffect` to dispatch the thunk when your app loads
+7.  Use `useAppDispatch` and `useEffect` to dispatch the thunk when your app loads
 
 ## Next steps
 
@@ -132,6 +156,17 @@ At this stage we should be able to view our information. Below are suggested nex
 
 ## Testing
 
+<details>
+<summary>Useful test scripts</summary>
+
+```c
+npm test // runs tests one time
+npm run test:watch // watches and runs tests when file is saved
+npm test -- --coverage // shows coverage summary
+```
+
+</details>
+
 Make sure anything you write code for is submitted for review with tests. Untested code will not be merged so don't forget to test as you go!
 
 We're looking for test coverage in the green range (80% and over) for each part of a ticket you contribute to.
@@ -141,10 +176,6 @@ Simply run `npm test -- --coverage` to see your coverage stats. Uncovered lines 
 Here is an example of what we would like to see with regards to testing coverage:
 
   ![Testing Coverage](server/readme-screenshots/coverage.png)
-
-If you're unsure about where to start with a test, refer to the Pikopiko 2022 Miro board diagram by Week 7.
-
- ![Testing Diagram](server/readme-screenshots/testing-diagram.png)
 
 ## Other Tips for Kes-Ke-Say
 - Have fun ㋡
