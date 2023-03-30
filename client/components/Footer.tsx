@@ -6,7 +6,7 @@ function Footer() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div>
               <img
-                src="images/icons/icon-black-4.png"
+                src="/images/icons/icon-darkgray.png"
                 className="mr-5 h-6 sm:h-9"
                 alt="logo"
               />
@@ -36,7 +36,7 @@ function Footer() {
                 <p className="font-medium">Services</p>
                 <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
                   <a className="hover:opacity-75" href="/">
-                    Somethin
+                    Something
                   </a>
                   <a className="hover:opacity-75" href="/">
                     Company Review
