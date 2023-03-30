@@ -31,11 +31,6 @@
           "runtime": "automatic"
         }
       ]
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-transform-runtime"
     ]
   },
   "eslintConfig": {
@@ -71,6 +66,8 @@
     "@types/express": "^4.17.17",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/superagent": "^4.1.16",
+    "@types/supertest": "^2.0.12",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.7.1",
     "eslint": "^8.10.0",
@@ -85,6 +82,7 @@
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "mini-css-extract-plugin": "^2.6.1",
+    "nock": "^13.3.0",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "postcss-loader": "^7.0.1",
@@ -102,7 +100,7 @@
     "tailwindcss": "^3.1.8",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.2",
+    "typescript": "~4.8.4",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
   },
@@ -115,9 +113,14 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|glb|gltf)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "identity-obj-proxy"
     },
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx"],
-    "testEnvironment": "jsdom",
-    "transformIgnorePatterns": ["/node_modules/(?!(@react-three/drei)/)"]
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
   },
   "browserslist": "> 2%, not dead"
 }

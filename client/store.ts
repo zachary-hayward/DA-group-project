@@ -15,9 +15,13 @@ export type ThunkAction<T = void> = BaseThunkAction<
   AnyAction
 >
 
-const store = createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(thunkMiddleware))
-)
+export function intialiseStore() {
+  return createStore(
+    reducers,
+    composeWithDevTools(applyMiddleware(thunkMiddleware))
+  )
+}
+
+const store = intialiseStore()
 
 export default store
