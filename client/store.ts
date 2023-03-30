@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { legacy_createStore as createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import type { ThunkAction as BaseThunkAction } from 'redux-thunk'
@@ -15,9 +15,13 @@ export type ThunkAction<T = void> = BaseThunkAction<
   AnyAction
 >
 
-const store = createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(thunkMiddleware))
-)
+export function intialiseStore() {
+  return createStore(
+    reducers,
+    composeWithDevTools(applyMiddleware(thunkMiddleware))
+  )
+}
+
+const store = intialiseStore()
 
 export default store
