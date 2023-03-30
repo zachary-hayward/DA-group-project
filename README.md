@@ -117,22 +117,24 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  users: [{
-		id: 1,
-		auth0Id: 'auth0|123',
-		username: 'paige',
-		fullName: 'Paige Turner',
-		location: 'Auckland',
-		image: 'ava-03.png'
-	},
-	{
-		id: 2,
-		auth0Id: 'auth0|234',
-		username: 'ida',
-		fullName: 'Ida Dapizza',
-		location: 'Auckland',
-		image: 'ava-02.png'
-	}],
+  users: [
+    {
+      id: 1,
+      auth0Id: 'auth0|123',
+      username: 'paige',
+      fullName: 'Paige Turner',
+      location: 'Auckland',
+      image: 'ava-03.png'
+    },
+    {
+      id: 2,
+      auth0Id: 'auth0|234',
+      username: 'ida',
+      fullName: 'Ida Dapizza',
+      location: 'Auckland',
+      image: 'ava-02.png'
+    }
+  ],
   isLoading: false,
   error: null,
 }
