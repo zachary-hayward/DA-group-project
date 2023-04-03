@@ -1,4 +1,8 @@
 function Nav() {
+  const user = {
+    username: 'ida',
+  }
+
   return (
     <>
       <nav className="flex flex-col text-center sm:flex-row sm:text-left sm:justify-between py-4 px-6 bg-white shadow sm:items-baseline w-full">
@@ -24,7 +28,7 @@ function Nav() {
             Groups
           </a>
           <a
-            href="/profiles"
+            href={`/profiles/${user.username}`}
             className="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2"
           >
             Profile

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 
 export default function Home() {
   const navigate = useNavigate()
-  const isAuth = false
+  const isAuth = true
 
   useEffect(() => {
     if (!isAuth) {
