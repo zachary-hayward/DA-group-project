@@ -68,7 +68,7 @@ export default function Croissants({ speed = 1, count = 40, depth = 90, easing =
       <spotLight position={[10, 20, 50]} penumbra={1} intensity={3} color="orange" />
       {/* Cubic easing here to spread out objects a little more interestingly so a sole big object up front once in a while - Found this and not sure how it works */}
       {Array.from({ length: count }, (_, i) => <Croissant key={i} index={i} z={Math.round(easing(i / count) * depth)} speed={speed} />)}
-      <Environment preset="sunset" />
+      <Environment files='/images/little_paris_eiffel_tower_4k.hdr' />
 
       <EffectComposer multisampling={0}>
         <DepthOfField target={[0, 0, 60]} focalLength={0.5} bokehScale={14} height={700} />
