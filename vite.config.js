@@ -3,6 +3,11 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  test: {
+    deps: {
+      inline: ['three'],
+    },
+  },
   plugins: [react()],
   server: {
     proxy: {
