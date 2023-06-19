@@ -8,7 +8,6 @@ import groupsRoutes from './routes/groups'
 const server = express()
 
 server.use(express.json())
-// server.use(express.static(join(__dirname, 'public')))
 
 server.use('/api/v1/users', usersRoutes)
 server.use('/api/v1/posts', postsRoutes)
@@ -20,9 +19,5 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(Path.resolve(__dirname, '../index.html'))
   })
 }
-
-// server.get('*', (req, res) => {
-//   res.sendFile(join(__dirname, 'public', 'index.html'))
-// })
 
 export default server
