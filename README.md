@@ -1,6 +1,6 @@
 # Kes-Ke-Say
 ## Get to know your Repo
-This repo is designed to provide space to code our fullstack app project titled _Kes-Ke-Say_. It contains node modules and folders for databases, routes, api requests, react components, and redux actions and creators. 
+This repo is designed to provide space to code our fullstack app project titled _Kes-Ke-Say_. It contains node modules and folders for databases, routes, api requests, and react components. 
 
 ## From the Command Line
 ```
@@ -11,7 +11,9 @@ npm run knex migrate:latest
 npm run knex seed:run
 npm run dev
 ```
-You can find the server running on [http://localhost:3000](http://localhost:3000).
+Visit [http://localhost:5173](http://localhost:5173) to view in the browser.
+
+You can find the API server running on [http://localhost:3000](http://localhost:3000).
 
 To kickstart the project, we have provided you with a landing page, a temporary user homepage plus knex migrations and seeds. Here is what you should see in your browser.
 
@@ -77,12 +79,12 @@ Our first job is getting something showing on the front end from our database. H
 
 ## Back End
 
-1.  Design a database to store a list of your things (e.g. users, posts)
+1.  Database to store a list of your things (e.g. users, posts)
 
   ![Database diagram](server/readme-screenshots/db-diagram.png)
 
 
-2.  Build the migrations and seed data
+2.  Migrations and seed data examples
 
 __Users table -__
   |id|username|full_name|location|image|
@@ -107,15 +109,15 @@ __Posts table -__
 ## Front End
 
 1.  Build a React Component with static html
-2.  Build Redux Reducer. Start with a hardcoded initial state, for example:
+2.  Start with hardcoded data, for example:
 ```ts
-interface UsersState {
+interface UsersData {
   users: User[]
   isLoading: boolean
   error: string | null
 }
 
-const initialState: UsersState = {
+const initialState: UsersData = {
   users: [
     {
       id: 1,
@@ -138,11 +140,10 @@ const initialState: UsersState = {
   error: null,
 }
 ```
-3.  Use `useAppSelector` to display the redux state you hardcoded in the React Component
-4.  Build an API Client in the front end to request the information from your routes
-5.  Build Thunk Actions to use the API and get the information
-6.  Build Redux Actions to save task data from the thunk
-7.  Use `useAppDispatch` and `useEffect` to dispatch the thunk when your app loads
+3.  Build an API Client in the front end to request the information from your routes
+4.  Use `useQuery` to fetch data with the API Client function
+5.  Add a loading state to show when data is being fetched
+6.  Show an error message if something goes wrong
 
 ## Next steps
 
@@ -151,7 +152,7 @@ At this stage we should be able to view our information. Below are suggested nex
 - Include the ability to add a new record (will need a form in your components)
 - Include the ability to remove/delete records
 - Include the ability to update records (e.g. for correcting typos)
-  - You might have some other information that should be included in your database design, but this may require adjusting your database design - start simple!
+  - You might have some other information that should be included in the database, but this may require adjusting your database design - start simple!
 - Is there any complex data you chose to not include earlier or any way you could expand this dataset?
 - If you haven't already, CSS!
 
@@ -161,8 +162,7 @@ At this stage we should be able to view our information. Below are suggested nex
 <summary>Useful test scripts</summary>
 
 ```c
-npm test // runs tests one time
-npm run test:watch // watches and runs tests when file is saved
+npm test // watches and runs tests when file is saved
 npm test -- --coverage // shows coverage summary
 ```
 
