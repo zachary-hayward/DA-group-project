@@ -1,10 +1,13 @@
-const { join } = require('node:path')
+import * as Path from 'node:path'
+import * as URL from 'node:url'
 
-module.exports = {
+const __filename = URL.fileURLToPath(import.meta.url)
+const __dirname = Path.dirname(__filename)
+export default {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: join(__dirname, 'dev.sqlite3'),
+      filename: Path.join(__dirname, 'dev.sqlite3'),
     },
     useNullAsDefault: true,
     pool: {
@@ -18,10 +21,10 @@ module.exports = {
       filename: ':memory:',
     },
     migrations: {
-      directory: join(__dirname, 'migrations'),
+      directory: Path.join(__dirname, 'migrations'),
     },
     seeds: {
-      directory: join(__dirname, 'seeds'),
+      directory: Path.join(__dirname, 'seeds'),
     },
     useNullAsDefault: true,
     pool: {
@@ -29,31 +32,14 @@ module.exports = {
     },
   },
 
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password',
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
-  },
-
   production: {
-    client: 'postgresql',
-    connection: process.env.DATABASE_URL,
-    pool: {
-      min: 2,
-      max: 10,
+    client: 'sqlite3',
+    useNullAsDefault: true,
+    connection: {
+      filename: '/app/storage/prod.sqlite3',
     },
-    migrations: {
-      tableName: 'knex_migrations',
+    pool: {
+      afterCreate: (conn, cb) => conn.run('PRAGMA foreign_keys = ON', cb),
     },
   },
 }

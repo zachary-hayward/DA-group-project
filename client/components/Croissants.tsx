@@ -97,10 +97,10 @@ export default function Croissants({
       <spotLight
         position={[10, 20, 50]}
         penumbra={1}
-        intensity={3}
+        intensity={1}
         color="orange"
       />
-      {/* Cubic easing here to spread out objects a little more interestingly so a sole big object up front once in a while - Found this and not sure how it works */}
+      {/* Cubic easing here to spread out objects a little more interestingly so a sole big object up front once in a while - Found this */}
       {Array.from({ length: count }, (_, i) => (
         <Croissant
           key={i}

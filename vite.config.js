@@ -4,8 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   test: {
-    deps: {
-      inline: ['three-stdlib'],
+    optimizer: {
+      ssr: {
+        include: ['three-stdlib'],
+      },
     },
   },
   plugins: [react()],

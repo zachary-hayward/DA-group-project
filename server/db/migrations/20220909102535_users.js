@@ -2,7 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
+export const up = function (knex) {
   return knex.schema.createTable('users', (table) => {
     table.increments('id').primary()
     table.string('auth0_id').unique()
@@ -11,12 +11,12 @@ exports.up = function(knex) {
     table.string('location')
     table.text('image')
   })
-};
+}
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+export const down = function (knex) {
   return knex.schema.dropTable('users')
-};
+}
