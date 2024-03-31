@@ -16,71 +16,18 @@ function Footer() {
             </div>
             <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
               <div>
-                <p className="font-medium">Company</p>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                  <a className="hover:opacity-75" href="#">
-                    About
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Meet the Team
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    History
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Careers
-                  </a>
-                </nav>
+                <p className="font-medium">News</p>
               </div>
               <div>
-                <p className="font-medium">Services</p>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                  <a className="hover:opacity-75" href="#">
-                    Something
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Company Review
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    SEO Optimisation
-                  </a>
-                </nav>
+                <p className="font-medium">Weather</p>
               </div>
               <div>
-                <p className="font-medium">Helpful Links</p>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                  <a className="hover:opacity-75" href="#">
-                    Contact
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    FAQs
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Live Chat
-                  </a>
-                </nav>
-              </div>
-              <div>
-                <p className="font-medium">Legal</p>
-                <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                  <a className="hover:opacity-75" href="#">
-                    Privacy Policy
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Terms &amp; Conditions
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Returns Policy
-                  </a>
-                  <a className="hover:opacity-75" href="#">
-                    Accessibility
-                  </a>
-                </nav>
+                <p className="font-medium">Date & Time</p>
               </div>
             </div>
           </div>
           <p className="mt-8 text-xs text-gray-800">
-            © Whai 2023 | Kes-Ke-Say Limited
+            © Tohorā 2024 | Kes-Ke-Say Limited
           </p>
         </div>
       </footer>
