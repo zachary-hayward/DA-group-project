@@ -36,8 +36,8 @@
     "knex": "^2.5.1",
     "pg": "^8.8.0",
     "sqlite3": "^5.1.6",
-    "superagent": "8.1.2",
-    "three": "^0.150.1"
+    "superagent": "^9.0.2",
+    "three": "^0.165.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.14.5",
