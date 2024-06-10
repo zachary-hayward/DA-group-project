@@ -5,7 +5,7 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { useGLTF, Detailed, Environment } from '@react-three/drei'
 import { EffectComposer, DepthOfField } from '@react-three/postprocessing'
 import croissantImage from '../assets/images/Croissant_Default.gltf?url'
-import parisEnvt from '../assets/images/little_paris_eiffel_tower_4k.hdr?url'
+import parisEnvt from '../assets/images/victoria_sunset_4k.hdr?url'
 export interface Positioning {
   index: number
   z: number
@@ -28,7 +28,7 @@ function Croissant({ index, z, speed }: Positioning) {
   const { width, height } = viewport.getCurrentViewport(camera, [0, 0, -z])
 
   const { nodes, materials } = useGLTF(
-    croissantImage
+    croissantImage,
   ) as unknown as CroissantData
 
   const [data] = useState({
@@ -54,13 +54,13 @@ function Croissant({ index, z, speed }: Positioning) {
       lod.position.set(
         index === 0 ? 0 : data.x * width,
         (data.y += dt * speed),
-        -z
+        -z,
       )
     // Rotate the object around
     lod.rotation.set(
       (data.rX += dt / data.spin),
       Math.sin(index * 1000 + state.clock.elapsedTime / 10) * Math.PI,
-      (data.rZ += dt / data.spin)
+      (data.rZ += dt / data.spin),
     )
     // Once they reach the top, send them again to the bottom
     if (data.y > height * (index === 0 ? 4 : 1))
@@ -115,7 +115,7 @@ export default function Croissants({
         <DepthOfField
           target={[0, 0, 60]}
           focalLength={0.5}
-          bokehScale={14}
+          bokehScale={1}
           height={700}
         />
       </EffectComposer>
