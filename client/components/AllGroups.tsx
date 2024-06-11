@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import getAllGroups from '../apis/groups'
 
 export default function AllGroups() {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ['groups'],
     queryFn: getAllGroups,
   })
@@ -11,17 +11,29 @@ export default function AllGroups() {
     return <p>Something went wrong...</p>
   }
 
-  if (isLoading) {
+  if (isPending) {
     return <p>Loading...</p>
   }
-
   console.log(data)
-
   return (
     <div>
       {data.map((group) => (
-        <p key={group.id}>{group.name}</p>
+        <div
+          key={group.id}
+          className="w-40 m-auto text-center hover:scale-125 transition ease-in-out cursor-pointer"
+        >
+          <img
+            src={`/images/icons/${group.image}`}
+            alt={group.image}
+            className="h-10 w-10 m-auto mt-5"
+          ></img>
+          <p key={group.id} className="mb-5">
+            {group.name}
+          </p>
+        </div>
       ))}
     </div>
   )
 }
+
+///testing?? or pinot time?
