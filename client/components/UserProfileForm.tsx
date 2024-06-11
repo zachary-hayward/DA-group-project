@@ -32,36 +32,46 @@ export default function UserProfileForm(props: Props) {
   }
   
   return (
-    <form onSubmit={handleSubmit} className="form">
-      <label htmlFor="username">User Name</label>
-      <input
-        type="text"
-        name="username"
-        id="username"
-        placeholder="Enter a user name"
-        value={formState.username}
-        onChange={handleChange}
-      />
-      <label htmlFor="fullname">Full Name</label>
-      <input
-        type="text"
-        name="fullName"
-        id="fullName"
-        placeholder="Enter your full name"
-        value={formState.fullName}
-        onChange={handleChange}
-      />
-      <label htmlFor="location">Location</label>
-      <input
-        type="text"
-        name="location"
-        id="location"
-        placeholder="Enter your location"
-        value={formState.location}
-        onChange={handleChange}
-      />
-      <Avatar formImage={formState.image} handleChange={handleChange} />
-      <br />
+    <form onSubmit={handleSubmit} className='form border-2 border-black flex flex-col items-center w-1/2 mx-auto space-y-2 pt-2 pb-2'>
+      <div className='flex gap-2'>
+        <label htmlFor="username">User Name:</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Enter a user name"
+          value={formState.username}
+          onChange={handleChange}
+          className='border-2 border-black rounded'
+        />
+      </div>
+      <div className='flex gap-2'>
+        <label htmlFor="fullname">Full Name:</label>
+        <input
+          type="text"
+          name="fullName"
+          id="fullName"
+          placeholder="Enter your full name"
+          value={formState.fullName}
+          onChange={handleChange}
+          className='border-2 border-black rounded'
+        />
+      </div>
+      <div className='flex gap-2'>
+        <label htmlFor="location">&nbsp;Location:</label> {/* &nbsp; How else do I get this to line up nicely :D */}
+        <input
+          type="text"
+          name="location"
+          id="location"
+          placeholder="Enter your location"
+          value={formState.location}
+          onChange={handleChange}
+          className='border-2 border-black rounded'
+        />
+      </div>
+      <div className=''>
+        <Avatar formImage={formState.image} handleChange={handleChange} />
+      </div>
       <button>Register</button>
     </form>
   )

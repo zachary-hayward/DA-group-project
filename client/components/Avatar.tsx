@@ -27,7 +27,6 @@ export default function Avatar({formImage, handleChange}:AvatarProps) {
 
   return (
     <div className=''>
-      <span className=''>Avatar:</span>
       <div className='flex flex-row'>
         <button onClick={(e) => {e.preventDefault(); handlePrevious()}} disabled={currentIndex === 0}
           className='text-5xl font-extrabold'
