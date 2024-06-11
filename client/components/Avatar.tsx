@@ -30,6 +30,7 @@ export default function Avatar({formImage, handleChange}:AvatarProps) {
       <div className='flex flex-row justify-center'>
         <button onClick={(e) => {e.preventDefault(); handlePrevious()}} disabled={currentIndex === 0}
           className={`text-5xl ${currentIndex > 0 ? 'font-extrabold' : 'font-thin'}`}
+          data-testid='prevButton'
         >
           &lt;
         </button>
@@ -46,6 +47,7 @@ export default function Avatar({formImage, handleChange}:AvatarProps) {
         </div>
         <button onClick={(e) => {e.preventDefault(); handleNext()}} disabled={currentIndex === (imageCount - 5)}
           className={`text-5xl ${currentIndex < imageCount - imageDisplay ? 'font-extrabold' : 'font-thin'}`}
+          data-testid='nextButton'
         >
           &gt;
         </button>
