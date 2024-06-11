@@ -25,7 +25,7 @@ export default function UserProfileForm(props: Props) {
   const handleChange = (
     evt: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    > | {target: {name:string, value:string}}
   ) => {
     const { name, value } = evt.target
     setFormState((prev) => ({ ...prev, [name]: value }))

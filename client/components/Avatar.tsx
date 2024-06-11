@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react"
 
 interface AvatarProps {
   formImage: string
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> | {target: {name:string, value:string}}) => void
 }
 
 export default function Avatar({formImage, handleChange}:AvatarProps) {
@@ -13,15 +13,14 @@ export default function Avatar({formImage, handleChange}:AvatarProps) {
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => {
-      if (prevIndex > 0) return prevIndex - 1
-      return prevIndex
+      return Math.max(0, prevIndex-1)
+
     })
   }
   
   const handleNext = () => {
     setCurrentIndex((prevIndex) => {
-      if (prevIndex < (imageCount - imageDisplay)) return prevIndex + 1
-      return prevIndex
+      return Math.min((imageCount - imageDisplay), prevIndex+1)
     })
   }
 
@@ -36,12 +35,12 @@ export default function Avatar({formImage, handleChange}:AvatarProps) {
         </button>
         <div className=''>
           {imageList.slice(currentIndex, currentIndex + imageDisplay).map((image, i) => (
-            <button key={i} 
+            <button key={i} data-testid={`button number ${1+i+currentIndex}`}
               onClick={(e) => {e.preventDefault(); handleChange({ target: { name: 'image', value: image } })}}
               className={`w-10 h-10 cursor-pointer
                 ${formImage === image ? 'border-2 border-black rounded-full transform scale-110' : ''}`}
             >
-              <img src={`/images/avatars/${image}`} alt={`Avatar number ${currentIndex + i}`} />
+              <img src={`/images/avatars/${image}`} alt={`Avatar number ${1 + i + currentIndex}`} />
             </button>
           ))}
         </div>

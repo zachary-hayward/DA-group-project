@@ -40,3 +40,10 @@ export function renderRoute(location: string) {
   )
   return { user, ...screen }
 }
+
+export function renderComponent(component:React.ReactNode){
+  const user = userEvent.setup()
+  const screen = render(component)
+
+  return {user, ...screen}
+}
