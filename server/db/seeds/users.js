@@ -38,5 +38,13 @@ export const seed = async function (knex) {
       location: 'Wellington',
       image: 'ava-08.png',
     },
+    {
+      id: 5,
+      auth0_id: 'auth0|456',
+      username: 'chris',
+      full_name: 'Chris P Bacon',
+      location: 'Wellington',
+      image: 'ava-08.png',
+    }
   ])
 }
