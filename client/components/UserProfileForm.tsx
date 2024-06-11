@@ -72,7 +72,7 @@ export default function UserProfileForm(props: Props) {
       <div className=''>
         <Avatar formImage={formState.image} handleChange={handleChange} />
       </div>
-      <button>Register</button>
+      <button className='btn-blue px-8 mx-8'>Register</button>
     </form>
   )
 }
