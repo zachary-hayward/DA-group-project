@@ -1,6 +1,5 @@
 import request from 'superagent'
 import { User, UserData } from '../../models/user'
-import { useAuth0 } from '@auth0/auth0-react'
 
 const rootUrl = '/api/v1/users'
 

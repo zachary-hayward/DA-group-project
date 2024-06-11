@@ -32,7 +32,7 @@ export default function UserProfileForm(props: Props) {
   }
   
   return (
-    <form onSubmit={handleSubmit} className='form border-2 border-black flex flex-col items-center w-1/2 mx-auto space-y-2 pt-2 pb-2'>
+    <form onSubmit={handleSubmit} className='form flex flex-col items-center space-y-2'>
       <div className='flex gap-2'>
         <label htmlFor="username">User Name:</label>
         <input
