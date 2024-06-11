@@ -1,6 +1,7 @@
-import { property } from 'three/examples/jsm/nodes/Nodes.js'
+// import { property } from 'three/examples/jsm/nodes/Nodes.js'
 import { UserData } from '../../models/user'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import Avatar from './Avatar'
 
 interface Props extends UserData {
   onSubmit: (_: UserData) => void
@@ -29,7 +30,7 @@ export default function UserProfileForm(props: Props) {
     const { name, value } = evt.target
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
-
+  
   return (
     <form onSubmit={handleSubmit} className="form">
       <label htmlFor="username">User Name</label>
@@ -59,9 +60,9 @@ export default function UserProfileForm(props: Props) {
         value={formState.location}
         onChange={handleChange}
       />
-      //TODO:Avatar.tsx stuff
+      <Avatar formImage={formState.image} handleChange={handleChange} />
       <br />
-      <button>Submit</button>
+      <button>Register</button>
     </form>
   )
 }

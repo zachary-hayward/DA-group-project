@@ -25,7 +25,7 @@ export default function Register() {
 
   return (
     <>
-      <p>Register now pls</p>
+      <p>Welcome! Lets give your registration details to Jean-Pierre. It&apos;l be great!</p>
       <UserProfileForm
         onSubmit={handleAdd}
         {...{
