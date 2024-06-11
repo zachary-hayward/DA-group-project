@@ -3,9 +3,9 @@ import * as db from '../db/functions/groups.ts'
 const router = express.Router()
 
 // GET /api/v1/groups
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const groups = db.getAllGroups()
+    const groups = await db.getAllGroups()
     res.json(groups)
 
     res.status(200).send('Hello from the groups route!')
