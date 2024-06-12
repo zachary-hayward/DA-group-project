@@ -7,9 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     const groups = await db.getAllGroups()
     res.json(groups)
-    res.status(200).send('Hello from the groups route!')
   } catch (e) {
-    res.status(500)
     next(e)
   }
 })
