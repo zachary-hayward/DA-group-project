@@ -4,10 +4,10 @@ import checkJwt, { JwtRequest } from '../auth0.ts'
 
 const router = express.Router()
 
-// GET /api/v1/users
-router.get('/', (req, res) => {
-  res.status(200).send('Hello from the users route!')
-})
+// // GET /api/v1/users
+// router.get('/', (req, res) => {
+//   res.status(200).send('Hello from the users route!')
+// })
 
 // POST /api/v1/users
 router.post('/', checkJwt, async (req: JwtRequest, res) => {
@@ -24,7 +24,8 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 })
 
 //Check user exists
-router.get('/checkauth', checkJwt, async (req: JwtRequest, res) => {
+// GET /api/v1/users
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
   const authId = req.auth?.sub
   try {
     const userInfo = await db.getUserByAuthId(authId)

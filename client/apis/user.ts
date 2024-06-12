@@ -6,7 +6,7 @@ const rootUrl = '/api/v1/users'
 export async function getUser(token: Promise<string>): Promise<{ user: User }> {
   const tvalue = await token
   return request
-    .get(`${rootUrl}/checkauth`)
+    .get(`${rootUrl}`)
     .set('Authorization', `Bearer ${tvalue}`)
     .then((res) => res.body)
 }
