@@ -106,7 +106,6 @@ describe('Avatar', () => {
     )
 
     const circledUnclicked = await screen.findByTestId(buttonOneTestId)
-    console.log('words' + formImage)
 
     await userEvent.click(circledUnclicked)
 

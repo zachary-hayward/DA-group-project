@@ -19,7 +19,6 @@ export default function UserProfileForm(props: Props) {
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()
     props.onSubmit(formState)
-    console.log('submitted')
   }
 
   const handleChange = (
@@ -72,7 +71,7 @@ export default function UserProfileForm(props: Props) {
       <div className=''>
         <Avatar formImage={formState.image} handleChange={handleChange} />
       </div>
-      <button className='btn-blue px-8 mx-8'>Register</button>
+      <button className='btn-blue px-8 mx-8' data-testid="submit-button">Register</button>
     </form>
   )
 }

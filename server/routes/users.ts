@@ -16,7 +16,9 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
     return
   }
   try {
-    await db.addUser(req.body.userData)
+    const id = await db.addUser(req.body.userData)
+    
+    res.status(201).json({newId: id})
   } catch (error) {
     console.error(`Error posting userdata:`, error)
     res.sendStatus(500)
