@@ -7,14 +7,16 @@ export default function AllGroups() {
     queryFn: getAllGroups,
   })
 
+  if (isPending) {
+    return <p>Loading...</p>
+  }
+
   if (isError) {
     return <p>Something went wrong...</p>
   }
 
-  if (isPending) {
-    return <p>Loading...</p>
-  }
   console.log(data)
+
   return (
     <div>
       {data.map((group) => (

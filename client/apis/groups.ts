@@ -1,9 +1,9 @@
 import request from 'superagent'
-import type { Groups } from '../../models/groups.ts'
+import type { Group } from '../../models/groups.ts'
 
 const rootURL = '/api/v1/groups'
 
-export default async function getAllGroups(): Promise<Groups[]> {
+export default async function getAllGroups(): Promise<Group[]> {
   const result = await request.get(rootURL)
   return result.body
 }
