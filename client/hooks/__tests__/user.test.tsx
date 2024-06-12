@@ -31,7 +31,7 @@ describe('user hook tests', () => {
       user: { sub: '100%' },
     })
 
-    const scope = nock('http://localhost')
+    const scope = nock(document.baseURI)
       .persist()
       .get('/api/v1/users/checkAuth')
       .reply(200, {
@@ -57,7 +57,7 @@ describe('user hook tests', () => {
       user: { sub: 'this is a test value' },
     })
 
-    const scope = nock('http://localhost')
+    const scope = nock(document.baseURI)
       .persist()
       .post('/api/v1/users')
       .reply(201)

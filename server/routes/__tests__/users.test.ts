@@ -35,7 +35,6 @@ const mockAuthenticatedUser = {
 beforeAll(() => {
   vi.mocked(checkJwt).mockImplementation(
     async (req: JwtRequest, res: Response, next: NextFunction) => {
-      console.log(req.body)
       req.auth = {
         sub: mockAuthenticatedUser.id,
       }
@@ -70,7 +69,7 @@ describe('GET api/v1/users/checkAuth', () => {
   })
 
   it('should return a status 500 if an error occurs', async () => {
-    vi.mocked(usersDb.getUserByAuthId).mockRejectedValue(Error('mock'))
+    vi.mocked(usersDb.getUserByAuthId).mockRejectedValue('fake')
     const res = await request(server).get('/api/v1/users/checkAuth')
 
     expect(res.statusCode).toBe(500)
@@ -101,8 +100,9 @@ describe('POST api/v1/users', () => {
     expect(addUserSpy).toHaveBeenLastCalledWith(newUser.userData)
     expect(res.body).toStrictEqual({ location: '/api/v1/users/3' })
   })
+
   it('should return a 500 if there is an error', async () => {
-    vi.mocked(usersDb.addUser).mockRejectedValue(Error('baaad'))
+    vi.mocked(usersDb.addUser).mockRejectedValue('fake')
 
     const res = await request(server)
       .post('/api/v1/users')
