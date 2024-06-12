@@ -33,7 +33,7 @@ describe('user hook tests', () => {
 
     const scope = nock('http://localhost')
       .persist()
-      .get('/api/v1/users')
+      .get('/api/v1/users/checkAuth')
       .reply(200, {
         id: 1,
         auth0Id: 'auth0|123',
@@ -42,17 +42,9 @@ describe('user hook tests', () => {
         location: 'Auckland',
         image: 'ava-03.png',
       })
-
-    const queryClient = new QueryClient()
-    const screen = renderComponent(
-      <QueryClientProvider client={queryClient}>
-        <Register />
-      </QueryClientProvider>,
-    )
+    const screen = renderRoute('/register')
 
     const paige = screen.findByText('paige')
-
-    queryClient.invalidateQueries({ queryKey: ['users'] })
 
     expect(paige).not.toBeNull()
   })
@@ -65,20 +57,14 @@ describe('user hook tests', () => {
       user: { sub: 'this is a test value' },
     })
 
-    const scope = nock('http://localhost:24678')
+    const scope = nock('http://localhost')
       .persist()
       .post('/api/v1/users')
       .reply(201)
 
     const queryClient = new QueryClient()
-    const screen = renderRoute('/register')
-    // const screen = renderComponent(
-    //   <QueryClientProvider client={queryClient}>
-    //     <Register />
-    //   </QueryClientProvider>,
-    // )
+    const { ...screen } = renderRoute('/register')
 
-    //
     const submitButton = await screen.findByTestId('submit-button')
 
     await userEvent.click(submitButton)

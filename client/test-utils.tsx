@@ -7,7 +7,7 @@ import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 import { routes } from './routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import nock from 'nock'
-nock.enableNetConnect(/(localhost|127\.0\.0\.1)/)
+
 beforeEach(cleanup)
 expect.extend(matchers)
 

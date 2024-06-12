@@ -20,7 +20,7 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
     const id = result.id
     const url = `/api/v1/users/${id}`
     res.setHeader('Location', url)
-    res.status(201).json({location:url})
+    res.status(201).json({ location: url })
   } catch (error) {
     console.error(`Error posting userdata:`, error)
     res.sendStatus(500)
@@ -29,11 +29,11 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 
 //Check user exists
 // GET /api/v1/users
-router.get('/', checkJwt, async (req: JwtRequest, res) => {
+router.get('/checkAuth', checkJwt, async (req: JwtRequest, res) => {
   const authId = req.auth?.sub
   try {
     const userInfo = await db.getUserByAuthId(authId)
-    res.json({ user: userInfo })
+    res.status(200).json({ user: userInfo })
   } catch (error) {
     console.error(`Error checking user via authid:`, error)
     res.sendStatus(500)

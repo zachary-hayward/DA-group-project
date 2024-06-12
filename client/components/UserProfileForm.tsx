@@ -22,17 +22,20 @@ export default function UserProfileForm(props: Props) {
   }
 
   const handleChange = (
-    evt: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    > | {target: {name:string, value:string}}
+    evt:
+      | ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+      | { target: { name: string; value: string } },
   ) => {
     const { name, value } = evt.target
     setFormState((prev) => ({ ...prev, [name]: value }))
   }
-  
+
   return (
-    <form onSubmit={handleSubmit} className='form flex flex-col items-center space-y-2'>
-      <div className='flex gap-2'>
+    <form
+      onSubmit={handleSubmit}
+      className="form flex flex-col items-center space-y-2"
+    >
+      <div className="flex gap-2">
         <label htmlFor="username">User Name:</label>
         <input
           type="text"
@@ -41,10 +44,10 @@ export default function UserProfileForm(props: Props) {
           placeholder="Enter a user name"
           value={formState.username}
           onChange={handleChange}
-          className='border-2 border-black rounded'
+          className="border-2 border-black rounded"
         />
       </div>
-      <div className='flex gap-2'>
+      <div className="flex gap-2">
         <label htmlFor="fullname">Full Name:</label>
         <input
           type="text"
@@ -53,11 +56,12 @@ export default function UserProfileForm(props: Props) {
           placeholder="Enter your full name"
           value={formState.fullName}
           onChange={handleChange}
-          className='border-2 border-black rounded'
+          className="border-2 border-black rounded"
         />
       </div>
-      <div className='flex gap-2'>
-        <label htmlFor="location">&nbsp;Location:</label> {/* &nbsp; How else do I get this to line up nicely :D */}
+      <div className="flex gap-2">
+        <label htmlFor="location">&nbsp;Location:</label>{' '}
+        {/* &nbsp; How else do I get this to line up nicely :D */}
         <input
           type="text"
           name="location"
@@ -65,13 +69,15 @@ export default function UserProfileForm(props: Props) {
           placeholder="Enter your location"
           value={formState.location}
           onChange={handleChange}
-          className='border-2 border-black rounded'
+          className="border-2 border-black rounded"
         />
       </div>
-      <div className=''>
+      <div className="">
         <Avatar formImage={formState.image} handleChange={handleChange} />
       </div>
-      <button className='btn-blue px-8 mx-8' data-testid="submit-button">Register</button>
+      <button className="btn-blue px-8 mx-8" data-testid="submit-button">
+        Register
+      </button>
     </form>
   )
 }
