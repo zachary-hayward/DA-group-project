@@ -56,42 +56,44 @@ export default function Register() {
   }
 
   return (
-    <div className="border-2 border-black w-3/5 mx-auto pt-2 pb-2">
-      <div className="flex flex-column justify-center">
-        <p className="text-center pt-2">
+    <div className='flex flex-grow justify-center bg-kks-black text-kks-black'>
+      <div className="container flex flex-col space-y-2 sm:space-y-4 lg:space-y-8  w-full md:w-3/4 lg:w-2/3 bg-kks-grey border-2 border-black rounded">
+        <div className="flex flex-row-reverse">
+          <button className="btn-blue m-2 ">View All Profiles</button>
+        </div>
+        <p className="hidden md:block text-center">
           Welcome! Give Jean-Pierre your details. It&apos;l be great!
         </p>
-        <button className="btn-blue px-2 mx-6">View All Profiles</button>
-      </div>
-      <UserProfileForm
-        onSubmit={handleAdd}
-        {...{
-          auth0Id: user?.sub ?? '',
-          username: '',
-          fullName: '',
-          location: '',
-          image: '',
-        }}
-      />
-      <div
-        className={`flex ${alertData.colour === 'green' ? 'bg-green-100' : 'bg-red-100'} rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
-        role="alert"
-      >
-        <svg
-          className="w-5 h-5 inline mr-3"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+        <UserProfileForm
+          onSubmit={handleAdd}
+          {...{
+            auth0Id: user?.sub ?? '',
+            username: '',
+            fullName: '',
+            location: '',
+            image: '',
+          }}
+        />
+        <div
+          className={`flex ${alertData.colour === 'green' ? 'bg-green-100' : 'bg-red-100'} rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
+          role="alert"
         >
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clipRule="evenodd"
-          ></path>
-        </svg>
-        <div>
-          <span className="font-medium">{alertData.text}</span>{' '}
-          {alertData.messageBody}
+          <svg
+            className="w-5 h-5 inline mr-3"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+          <div>
+            <span className="font-medium">{alertData.text}</span>{' '}
+            {alertData.messageBody}
+          </div>
         </div>
       </div>
     </div>
