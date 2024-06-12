@@ -56,13 +56,16 @@ export default function Register() {
   }
 
   return (
-    <div className='flex flex-grow justify-center bg-kks-black text-kks-black'>
-      <div className="container flex flex-col space-y-2 sm:space-y-4 lg:space-y-8  w-full md:w-3/4 lg:w-2/3 bg-kks-grey border-2 border-black rounded">
+    <div className='relative flex flex-grow justify-center'>
+      <div className='absolute inset-0 z-0 bg-kks-wine w-full'></div>
+      <div className='absolute inset-0 z-0 bg-kks-blue w-1/2'></div>
+      <div className="relative container bg-kks-grey flex flex-col space-y-2 sm:space-y-4 lg:space-y-8 w-full md:w-3/4 lg:w-2/3 border-2 border-black rounded">
         <div className="flex flex-row-reverse">
           <button className="btn-blue m-2 ">View All Profiles</button>
         </div>
         <p className="hidden md:block text-center">
-          Welcome! Give Jean-Pierre your details. It&apos;l be great!
+          Welcome! Give Jean-Pierre your details.
+          <br/>It&apos;l be great!
         </p>
         <UserProfileForm
           onSubmit={handleAdd}
