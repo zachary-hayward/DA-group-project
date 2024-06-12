@@ -59,24 +59,26 @@ export default function Register() {
     <div className='relative flex flex-grow justify-center'>
       <div className='absolute inset-0 z-0 bg-kks-wine w-full'></div>
       <div className='absolute inset-0 z-0 bg-kks-blue w-1/2'></div>
-      <div className="relative container bg-kks-grey flex flex-col space-y-2 sm:space-y-4 lg:space-y-8 w-full md:w-3/4 lg:w-2/3 border-2 border-black rounded">
+      <div className="relative container z-10 bg-white flex flex-col space-y-2 sm:space-y-4 lg:space-y-8 xl:space-y-12 w-full sm:max-w-[640px] border border-1 border-black">
         <div className="flex flex-row-reverse">
-          <button className="btn-blue m-2 ">View All Profiles</button>
+          <button className="btn-blue bg-kks-blue m-2 ">View All Profiles</button>
         </div>
         <p className="hidden md:block text-center">
           Welcome! Give Jean-Pierre your details.
           <br/>It&apos;l be great!
         </p>
-        <UserProfileForm
-          onSubmit={handleAdd}
-          {...{
-            auth0Id: user?.sub ?? '',
-            username: '',
-            fullName: '',
-            location: '',
-            image: '',
-          }}
-        />
+        <div className='md:border md:border-2 md:border-black md:bg-kks-grey sm:w-[380px] p-2 mx-auto'>
+          <UserProfileForm
+            onSubmit={handleAdd}
+            {...{
+              auth0Id: user?.sub ?? '',
+              username: '',
+              fullName: '',
+              location: '',
+              image: '',
+            }}
+          />
+        </div>
         <div
           className={`flex ${alertData.colour === 'green' ? 'bg-green-100' : 'bg-red-100'} rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
           role="alert"
