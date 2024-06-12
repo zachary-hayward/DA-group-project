@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import getAllGroups from '../apis/groups'
 
 export default function AllGroups() {
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['groups'],
     queryFn: getAllGroups,
   })
@@ -12,10 +12,8 @@ export default function AllGroups() {
   }
 
   if (isError) {
-    return <p>Something went wrong...</p>
+    return <p>Something went wrong...: {String(error)}</p>
   }
-
-  console.log(data)
 
   return (
     <div>
