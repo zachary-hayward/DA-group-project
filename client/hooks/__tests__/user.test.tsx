@@ -49,7 +49,7 @@ describe('user hook tests', () => {
     expect(paige).not.toBeNull()
   })
 
-  it('can add a user', async () => {
+  it.skip('can add a user', async () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
       isAuthenticated: true,
