@@ -49,6 +49,7 @@ describe('User Registration', () => {
     })
 
     const screen = renderComponent(<Register/>)
+    //const screen = renderRoute('/register')
 
     const loading = screen.getByText("Loading...")
 

@@ -7,8 +7,7 @@ export async function getUserByAuthId(authId: string | undefined) {
   return await db('users').where('auth0_id', authId).first()
 }
 
-export async function addUser(data: UserData) {
-  console.log(data)
+export async function addUser(data: UserData) : Promise<{id:number}>{
   const snakeCase: UserSnakeCase = {
     auth0_id: data.auth0Id,
     username: data.username ?? 'User',
@@ -16,7 +15,7 @@ export async function addUser(data: UserData) {
     location: data.location ?? 'Earth',
     image: data.image ?? 'ava-01.png',
   }
-  return await db('users').insert(snakeCase)
+  return await db('users').insert(snakeCase).returning('id')
 }
 
 export async function editUser(user: User) {

@@ -55,8 +55,12 @@ describe('user hook tests', ()=>{
     });
 
     const scope = nock('http://localhost').persist().post('/api/v1/users').reply(201)
+
+    const queryClient = new QueryClient()
+    const screen = renderComponent(<QueryClientProvider client={queryClient}><Register/></QueryClientProvider>)
+
     
-  
+  //
   })
 })
 
