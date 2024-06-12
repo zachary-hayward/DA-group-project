@@ -6,7 +6,8 @@ import '@testing-library/jest-dom/vitest'
 import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 import { routes } from './routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
+import nock from 'nock'
+nock.enableNetConnect(/(localhost|127\.0\.0\.1)/)
 beforeEach(cleanup)
 expect.extend(matchers)
 
@@ -36,14 +37,14 @@ export function renderRoute(location: string) {
   const screen = render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   )
   return { user, ...screen }
 }
 
-export function renderComponent(component:React.ReactNode){
+export function renderComponent(component: React.ReactNode) {
   const user = userEvent.setup()
   const screen = render(component)
 
-  return {user, ...screen}
+  return { user, ...screen }
 }
