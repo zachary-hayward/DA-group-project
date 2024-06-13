@@ -1,16 +1,13 @@
 import request from 'superagent'
 import { User, UserData } from '../../models/user'
 
-//for tests:
-//const rootUrl = 'http://localhost/api/v1/users'
-//for rendering server:
-const rootUrl = '/api/v1/users'
+const rootURL = new URL(`api/v1/users`, document.baseURI).toString()
 
 export async function getUser(token: Promise<string>): Promise<{ user: User }> {
   const tvalue = await token
 
   return request
-    .get(`${rootUrl}/checkAuth`)
+    .get(`${rootURL}/checkAuth`)
     .set('Authorization', `Bearer ${tvalue}`)
     .then((res) => res.body)
 }
@@ -25,7 +22,7 @@ export async function addUser({
   token,
 }: AddUserFunction): Promise<User> {
   return await request
-    .post(`${rootUrl}`)
+    .post(`${rootURL}`)
     .set('Authorization', `Bearer ${token}`)
     .send({ userData })
     .then((res) => res.body.user)

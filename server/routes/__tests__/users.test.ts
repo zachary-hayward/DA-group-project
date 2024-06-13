@@ -1,10 +1,9 @@
 import { it, expect, describe, vi, afterAll, beforeAll } from 'vitest'
 import request from 'supertest'
-
 import * as usersDb from '../../db/functions/users'
 import server from '../../server.ts'
 import checkJwt, { JwtRequest } from '../../auth0.ts'
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 
 vi.mock('../../db/functions/users')
 vi.mock('../../auth0.ts')
@@ -51,7 +50,7 @@ describe('GET api/v1/users/checkAuth', () => {
   it('should return a user, if one matches', async () => {
     vi.mocked(usersDb.getUserByAuthId).mockResolvedValue(mockUsers[0])
 
-    const res = await request(server).get('/api/v1/users/checkAuth')
+    const res = await request(server).get('/api/v1/users/checkRegistered')
 
     expect(res.statusCode).toBe(200)
     expect(res.body).toMatchInlineSnapshot(`
@@ -70,7 +69,7 @@ describe('GET api/v1/users/checkAuth', () => {
 
   it('should return a status 500 if an error occurs', async () => {
     vi.mocked(usersDb.getUserByAuthId).mockRejectedValue('fake')
-    const res = await request(server).get('/api/v1/users/checkAuth')
+    const res = await request(server).get('/api/v1/users/checkRegistered')
 
     expect(res.statusCode).toBe(500)
   })

@@ -1,21 +1,9 @@
 // @vitest-environment jsdom
-import {
-  describe,
-  it,
-  expect,
-  beforeAll,
-  beforeEach,
-  afterEach,
-  vi,
-} from 'vitest'
+import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import { renderRoute, renderComponent } from '../../test-utils'
+import { renderComponent } from '../../test-utils'
 import userEvent from '@testing-library/user-event'
-import { render, screen, renderHook } from '@testing-library/react'
 import nock from 'nock'
-import { ChangeEvent } from 'react'
-import UserProfileForm from '../UserProfileForm.tsx'
-import { UserData } from '../../../models/user.ts'
 import Register from '../Register.tsx'
 import * as auth0 from '@auth0/auth0-react'
 import * as useUser from '../../hooks/user.ts'
@@ -38,11 +26,13 @@ afterEach(() => nock.cleanAll())
 
 describe('User Registration', () => {
   it('Displays a loading indicator', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       isLoading: true,
     })
@@ -55,11 +45,13 @@ describe('User Registration', () => {
     expect(loading).not.toBeNull()
   })
   it('Displays an error message', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       isError: true,
       error: 'testing',
@@ -74,11 +66,13 @@ describe('User Registration', () => {
     expect(errorMessage).not.toBeNull()
   })
   it('Returns a message if no data found', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       data: undefined,
     })
@@ -93,11 +87,13 @@ describe('User Registration', () => {
   it('Tries to add a user when child form is submitted', async () => {
     let submissionAttempted = false
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       add: {
         mutate: () => {
@@ -117,18 +113,16 @@ describe('User Registration', () => {
     expect(submissionAttempted).toEqual(true)
   })
   it('Has a child form that gives feedback on avatar scrolling', async () => {
-    let submissionAttempted = false
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       add: {
-        mutate: () => {
-          submissionAttempted = true
-        },
+        mutate: () => {},
       },
       data: {
         user: {},
@@ -154,18 +148,16 @@ describe('User Registration', () => {
     expect(nextButton).toHaveClass(edgeClassName)
   })
   it('scrolls avatars on click', async () => {
-    let submissionAttempted = false
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       add: {
-        mutate: () => {
-          submissionAttempted = true
-        },
+        mutate: () => {},
       },
       data: {
         user: {},
@@ -194,19 +186,17 @@ describe('User Registration', () => {
   })
 
   it('selects an avatar on click', async () => {
-    let submissionAttempted = false
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
       user: { sub: '100%' },
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       add: {
-        mutate: () => {
-          submissionAttempted = true
-        },
+        mutate: () => {},
       },
       data: {
         user: {
@@ -216,9 +206,7 @@ describe('User Registration', () => {
     })
     const screen = renderComponent(<Register />)
 
-    const avatarOneAlt = `Avatar number 1`
     const buttonOneTestId = 'button number 1'
-    let formImage = ''
 
     const circledUnclicked = await screen.findByTestId(buttonOneTestId)
 

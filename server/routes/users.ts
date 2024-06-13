@@ -29,7 +29,7 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 
 //Check user exists
 // GET /api/v1/users
-router.get('/checkAuth', checkJwt, async (req: JwtRequest, res) => {
+router.get('/checkRegistered', checkJwt, async (req: JwtRequest, res) => {
   const authId = req.auth?.sub
   try {
     const userInfo = await db.getUserByAuthId(authId)

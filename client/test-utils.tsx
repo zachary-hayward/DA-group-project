@@ -6,7 +6,6 @@ import '@testing-library/jest-dom/vitest'
 import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 import { routes } from './routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import nock from 'nock'
 
 beforeEach(cleanup)
 expect.extend(matchers)
@@ -26,11 +25,11 @@ export function renderRoute(location: string) {
         retry: false,
       },
     },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {},
-    },
+    // logger: {
+    //   log: console.log,
+    //   warn: console.warn,
+    //   error: () => {},
+    // },
   })
 
   const user = userEvent.setup()

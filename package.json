@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
+    "@devacademy/eslint-config": "^1.10.1",
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.8",
     "@react-three/postprocessing": "^2.16.2",

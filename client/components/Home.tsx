@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 export default function Home() {
   const navigate = useNavigate()
-  const { user, getAccessTokenSilently } = useAuth0()
+  const { user } = useAuth0()
 
   const { data, isLoading, isError, error } = useUser() //here lives jwt magic)
 
@@ -14,7 +14,7 @@ export default function Home() {
       console.log(data)
       navigate('/register')
     }
-  }, [data, user, navigate])
+  }, [data, isLoading, isError, error, user, navigate])
 
   if (isLoading) return <span>Loading...</span>
 

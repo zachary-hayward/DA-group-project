@@ -1,21 +1,11 @@
 // @vitest-environment jsdom
-import {
-  describe,
-  it,
-  expect,
-  beforeAll,
-  beforeEach,
-  afterEach,
-  vi,
-} from 'vitest'
+import { describe, it, expect, beforeAll, afterEach } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import { renderRoute, renderComponent } from '../../test-utils'
+import { renderComponent } from '../../test-utils'
 import userEvent from '@testing-library/user-event'
-import { render, screen } from '@testing-library/react'
 import nock from 'nock'
 import Avatar from '../Avatar.tsx'
 import { ChangeEvent } from 'react'
-import Register from '../Register.tsx'
 import UserProfileForm from '../UserProfileForm.tsx'
 
 beforeAll(() => {
@@ -30,8 +20,8 @@ describe('Avatar', () => {
       <Avatar
         formImage={''}
         handleChange={function (
-          e:
-            | ChangeEvent<
+          e: //eslint-disable-line
+          | ChangeEvent<
                 HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
               >
             | { target: { name: string; value: string } },
@@ -54,8 +44,8 @@ describe('Avatar', () => {
       <Avatar
         formImage={''}
         handleChange={function (
-          e:
-            | ChangeEvent<
+          e: //eslint-disable-line
+          | ChangeEvent<
                 HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
               >
             | { target: { name: string; value: string } },
@@ -86,7 +76,6 @@ describe('Avatar', () => {
   })
   it('selects an avatar', async () => {
     let selected: { name: string; value: string } = { name: '', value: '' }
-    const avatarOneAlt = `Avatar number 1`
     const buttonOneTestId = 'button number 1'
     let formImage = ''
     const screen = renderComponent(
@@ -113,7 +102,7 @@ describe('Avatar', () => {
     expect(selected.value).toEqual('ava-01.png')
   })
   it('shows a circle when an avatar is selected', async () => {
-    const scope = nock('http://localhost').get('/api/v1/users').reply(200, {
+    nock('http://localhost').get('/api/v1/users').reply(200, {
       id: 1,
       auth0Id: 'auth0|123',
       username: 'paige',
@@ -124,7 +113,7 @@ describe('Avatar', () => {
 
     const screen = renderComponent(
       <UserProfileForm
-        onSubmit={(_) => {}}
+        onSubmit={() => {}}
         auth0Id={'auth0|123'}
         username={'paige'}
         fullName={'Paige turner'}
@@ -133,7 +122,6 @@ describe('Avatar', () => {
       />,
     )
 
-    const avatarOneAlt = `Avatar number 1`
     const buttonOneTestId = 'button number 1'
 
     const notYetTransformed = screen.getByTestId(buttonOneTestId)
@@ -150,8 +138,8 @@ describe('Avatar', () => {
       <Avatar
         formImage={''}
         handleChange={function (
-          e:
-            | ChangeEvent<
+          e: //eslint-disable-line
+          | ChangeEvent<
                 HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
               >
             | { target: { name: string; value: string } },
