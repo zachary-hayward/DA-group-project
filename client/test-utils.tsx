@@ -25,18 +25,25 @@ export function renderRoute(location: string) {
         retry: false,
       },
     },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {},
-    },
+    // logger: {
+    //   log: console.log,
+    //   warn: console.warn,
+    //   error: () => {},
+    // },
   })
 
   const user = userEvent.setup()
   const screen = render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   )
+  return { user, ...screen }
+}
+
+export function renderComponent(component: React.ReactNode) {
+  const user = userEvent.setup()
+  const screen = render(component)
+
   return { user, ...screen }
 }

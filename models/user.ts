@@ -7,8 +7,11 @@ export interface UserSnakeCase {
   image: string
 }
 
-export interface User {
+export interface User extends UserData {
   id: number
+}
+
+export interface UserData {
   auth0Id: string
   username: string
   fullName: string
