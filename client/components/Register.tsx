@@ -62,7 +62,7 @@ export default function Register() {
   //This is screwy because of the navigate('/register') in Home, I think. Pretty sure it goes to / then back to /register
   useEffect(() => {
     if (!alert && alertData.messageBody === successMessage.messageBody) {
-      navigate('/login') 
+      navigate('/') 
     }
   }, [alert, alertData])
 
