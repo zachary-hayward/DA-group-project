@@ -84,6 +84,7 @@ describe('Home.tsx', () => {
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
+      isFetching: false,
       isLoading: false,
       isError: false,
       data: { stuff: true, user: true },
