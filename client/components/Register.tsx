@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UserData } from '../../models/user'
 import { useAddUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 
 const successMessage = {
   text: 'Now get out there and drink some wine',
@@ -23,13 +24,15 @@ const duplicateNameMessage = {
 export default function Register() {
   const [alert, setAlert] = useState(false)
   const [alertData, setAlertData] = useState({
-    text: 'Now get out there and drink some wine',
-    messageBody: 'Profile Updated!',
-    colour: 'green',
+    text: '',
+    messageBody: '',
+    colour: '',
   })
 
   const { user, getAccessTokenSilently } = useAuth0()
   const users = useAddUser()
+
+  const navigate = useNavigate()
 
   const handleAdd = async (userData: UserData) => {
     //mutate here
@@ -51,10 +54,18 @@ export default function Register() {
       setAlert(() => true)
     } finally {
       setTimeout(() => {
-        setAlert(() => false)
+        setAlert(() => false);
       }, 2000)
     }
   }
+
+  // console.log('alert:', alert, 'messageBody:', alertData.messageBody)
+  useEffect(() => {
+    if (!alert && alertData.messageBody === successMessage.messageBody) {
+      // console.log('NAVIGATE!')
+      navigate('/')
+    }
+  }, [alert, alertData.messageBody, navigate])
 
   if (!user) {
     return <p>No User Found</p>
