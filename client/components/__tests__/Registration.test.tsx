@@ -7,9 +7,19 @@ import nock from 'nock'
 import Register from '../Register.tsx'
 import * as auth0 from '@auth0/auth0-react'
 import * as useUser from '../../hooks/user.ts'
+import * as reactRouterDom from 'react-router-dom'
 
 vi.mock('@auth0/auth0-react')
 vi.mock('../../hooks/user.ts')
+vi.mock("react-router-dom", async () => {
+  const mod = await vi.importActual<typeof import("react-router-dom")>(
+    "react-router-dom"
+  );
+  return {
+    ...mod,
+    useNavigate: () => vi.fn()
+  };
+})
 
 beforeAll(() => {
   nock.disableNetConnect()
@@ -61,7 +71,7 @@ describe('User Registration', () => {
     })
 
     //ACT
-    const screen = renderRoute('/register')
+    const screen = renderRoute('/register') 
 
     const submitButton = await screen.findByTestId('submit-button')
 
@@ -129,17 +139,29 @@ describe('User Registration', () => {
       },
     })
 
-    //ACT
     const screen = renderRoute('/register')
 
     const submitButton = await screen.findByTestId('submit-button')
 
+    //ACT
     await userEvent.click(submitButton)
 
     //ASSERT
     const alertMessage = await screen.findByText('Profile Updated!')
 
     expect(alertMessage).toBeVisible()
+    
+    const spy = vi.spyOn(reactRouterDom, 'useNavigate')
+
+    const didNavigate = await vi.waitFor(async () => {
+        expect(spy).toHaveBeenCalled()    
+        return true
+      },
+      {
+        timeout: 2500
+      }
+    )
+    expect(didNavigate).toBe(true)
   })
   it('Tries to add a user when child form is submitted', async () => {
     let submissionAttempted = false
