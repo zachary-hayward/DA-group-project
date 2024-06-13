@@ -75,7 +75,7 @@ export default function UserProfileForm(props: Props) {
         <Avatar formImage={formState.image} handleChange={handleChange} />
       </div>
       <button className="btn-blue px-8 mx-8" data-testid="submit-button">
-        Register
+        Submit
       </button>
     </form>
   )

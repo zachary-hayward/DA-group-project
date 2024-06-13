@@ -1,6 +1,6 @@
 import { it, expect, describe, vi, afterAll, beforeAll } from 'vitest'
 import request from 'supertest'
-import * as usersDb from '../../db/functions/users'
+import * as usersDb from '../../db/functions/users.ts'
 import server from '../../server.ts'
 import checkJwt, { JwtRequest } from '../../auth0.ts'
 import { Response, NextFunction } from 'express'
@@ -72,6 +72,65 @@ describe('GET api/v1/users/checkRegistered', () => {
     const res = await request(server).get('/api/v1/users/checkRegistered')
 
     expect(res.statusCode).toBe(500)
+  })
+})
+
+describe('GET api/v1/profiles/:username', () => {
+  it('should return a specific user', async () => {
+    const toReturn = {
+      auth0Id: 'auth0|123',
+      fullName: 'Paige Turner',
+      id: 1,
+      image: 'ava-03.png',
+      location: 'Auckland',
+      username: 'paige',
+    }
+    vi.mocked(usersDb.getUserByUsername).mockResolvedValue(toReturn)
+
+    const result = await request(server).get('/api/v1/profiles/paige')
+
+    expect(result.statusCode).toBe(200)
+    expect(result.body.user).toEqual(toReturn)
+    expect(result.body).toMatchInlineSnapshot(`
+      {
+        "user": {
+          "auth0Id": "auth0|123",
+          "fullName": "Paige Turner",
+          "id": 1,
+          "image": "ava-03.png",
+          "location": "Auckland",
+          "username": "paige",
+        },
+      }
+    `)
+  })
+})
+
+describe('PATCH api/v1/users', () => {
+  it('should edit a user', async () => {
+    const editedUser = {
+      user: {
+        auth0Id: 'auth0|123',
+        fullName: 'Paige T',
+        id: 1,
+        image: 'ava-03.png',
+        location: 'Auckland',
+        username: 'paige',
+      },
+    }
+
+    vi.mocked(usersDb.editUser).mockResolvedValue(1)
+
+    const editUserSpy = vi.spyOn(usersDb, 'editUser')
+
+    const res = await request(server)
+      .patch('/api/v1/users')
+      .set('Authorization', 'Bearer mock-token')
+      .send(editedUser)
+
+    expect(res.statusCode).toBe(204)
+    expect(editUserSpy).toHaveBeenLastCalledWith(editedUser.user)
+    expect(res.body).toStrictEqual({})
   })
 })
 

@@ -75,4 +75,24 @@ describe('Home.tsx', () => {
 
     expect(true).toBe(true)
   })
+  it('Does not redirect a signed in user', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      user: true,
+      // isLoading: false,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: { stuff: true, user: true },
+    })
+
+    const screen = renderRoute('/')
+
+    const postButton = await screen.findByTestId('post-button')
+
+    expect(postButton).toBeVisible()
+  })
 })

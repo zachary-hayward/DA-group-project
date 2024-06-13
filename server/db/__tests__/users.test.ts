@@ -35,6 +35,23 @@ describe('getUserByAuthId tests', () => {
   })
 })
 
+describe('getUserByUsername tests', () => {
+  it('returns a user by username', async () => {
+    const result = await userDb.getUserByUsername('paige')
+
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "auth0Id": "auth0|123",
+        "fullName": "Paige Turner",
+        "id": 1,
+        "image": "ava-03.png",
+        "location": "Auckland",
+        "username": "paige",
+      }
+    `)
+  })
+})
+
 describe('addUser tests', () => {
   it('fails to add when matching username', async () => {
     const addNewUser = {

@@ -48,18 +48,16 @@ router.get('/checkRegistered', checkJwt, async (req: JwtRequest, res) => {
   }
 })
 
-//GET /api/v1/users/:username
-router.get('/:username', checkJwt, async (req: JwtRequest, res) => {
+router.patch('/', checkJwt, async (req: JwtRequest, res) => {
   if (!req.auth?.sub) {
     res.sendStatus(401)
     return
   }
-
   try {
-    const username = req.params.username
-    const user = await db.getUserByUsername(username)
-    res.status(200).json({ user })
+    await db.editUser(req.body.user)
+    res.sendStatus(204)
   } catch (error) {
+    console.error(`Error editing user: ${error}`)
     res.sendStatus(500)
   }
 })

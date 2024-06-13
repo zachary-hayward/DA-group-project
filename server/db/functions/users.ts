@@ -2,6 +2,14 @@ import { User, UserData, UserSnakeCase } from '../../../models/user'
 import connection from '../connection'
 
 const db = connection
+const cols = [
+  'auth0_id as auth0Id',
+  'username',
+  'full_name as fullName',
+  'location',
+  'image',
+  'id',
+]
 
 export async function getUserByAuthId(authId: string | undefined) {
   return await db('users').where('auth0_id', authId).first()
@@ -33,6 +41,7 @@ export async function editUser(user: User) {
     full_name: user.fullName,
     location: user.location,
     image: user.image,
+    id: user.id,
   }
   return await db('users')
     .where({ auth0_id: user.auth0Id })
@@ -40,6 +49,6 @@ export async function editUser(user: User) {
     .update(snakeCase)
 }
 
-export async function getUserByUsername(username: string) {
-  return await db('users').where({ username }).first()
+export async function getUserByUsername(username: string): Promise<User> {
+  return await db('users').where({ username }).first().select(cols)
 }

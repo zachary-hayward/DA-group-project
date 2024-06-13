@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { UserData } from '../../models/user'
-import { useAddUser, useUser, useUserMutation } from '../hooks/user'
+import { useAddUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -56,14 +56,6 @@ export default function Register() {
     }
   }
 
-  //now need to notify there was update
-
-  // if (user.isLoading) {
-  //   return <span>Loading...</span>
-  // }
-  // if (users.isError)
-  //   return <span>Issue trying to retrieve user {`${users.error}`}</span>
-
   if (!user) {
     return <p>No User Found</p>
   }
@@ -96,7 +88,7 @@ export default function Register() {
           />
         </div>
         <div
-          className={`flex bg-${alertData.colour}-100 rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
+          className={`flex ${alertData.colour === 'green' ? 'bg-green-100' : 'bg-red-100'} rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
           role="alert"
         >
           <svg
