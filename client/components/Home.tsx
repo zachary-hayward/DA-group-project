@@ -11,12 +11,11 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoading && !isError && data && !data.user) {
-      console.log(data)
       navigate('/register')
     }
   }, [data, isLoading, isError, error, user, navigate])
 
-  if (isLoading) return <div>Loading</div>
+  if (isLoading) return <div>Loading...</div>
 
   if (isError) return <div>Whooooooops</div>
 

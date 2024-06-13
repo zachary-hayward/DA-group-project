@@ -18,9 +18,14 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const result = await db.addUser(req.body.userData)
     const id = result.id
-    const url = `/api/v1/users/${id}`
-    res.setHeader('Location', url)
-    res.status(201).json({ location: url })
+    if(id !== -1){
+      const url = `/api/v1/users/${id}`
+      res.setHeader('Location', url)
+      res.status(201).json({ location: url })
+    }
+    else{
+      res.sendStatus(409) //CONFLICT
+    }
   } catch (error) {
     console.error(`Error posting userdata:`, error)
     res.sendStatus(500)

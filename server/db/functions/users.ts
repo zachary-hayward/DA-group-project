@@ -15,7 +15,13 @@ export async function addUser(data: UserData) : Promise<{id:number}>{
     location: data.location ?? 'Earth',
     image: data.image ?? 'ava-01.png',
   }
-  return await db('users').insert(snakeCase).returning('id')
+
+  const matchingUser =  await db('users').where({username: data.username}).first()
+  
+  if(!matchingUser){
+    return await db('users').insert(snakeCase).returning('id')
+  }
+  return {id:-1} //-1 is a failure state
 }
 
 export async function editUser(user: User) {

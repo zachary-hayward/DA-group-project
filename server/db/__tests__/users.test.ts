@@ -36,6 +36,20 @@ describe('getUserByAuthId tests', () => {
 })
 
 describe('addUser tests', () => {
+  it('fails to add when matching username', async () => {
+    const addNewUser = {
+      auth0Id: 'auth0|92235',
+      username: 'paige',
+      fullName: 'jean pierre; not a real person',
+      location: 'Not Christchurch',
+      image: 'ava-13.png',
+    }
+    
+    const {id} = await userDb.addUser(addNewUser)
+
+    expect(id).toBe(-1)
+  
+  })
   it('adds a user', async () => {
     const toAdd = {
       auth0Id: 'auth0|987654',

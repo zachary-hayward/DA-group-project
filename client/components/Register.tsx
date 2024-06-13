@@ -20,14 +20,22 @@ export default function Register() {
     const token = await getAccessTokenSilently()
     try {
       const v = await users.add.mutateAsync({ userData, token })
-      if (!v) {
+      if (v === 500) {
         setAlertData((prev) => ({
           ...prev,
           messageBody: 'Notify Jean Pierre!',
           text: 'Something Went Wrong!',
           colour: 'red',
         }))
-      } else {
+      } else if(v === 409){ 
+        setAlertData((prev) => ({
+          ...prev,
+          messageBody: 'Be more original!',
+          text: 'Username already in use!',
+          colour: 'orange',
+        }))
+      }
+      else if(v === 201){
         setAlertData((prev) => ({
           ...prev,
           messageBody: 'Now get out there and drink some wine',

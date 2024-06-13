@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import { renderComponent } from '../../test-utils'
+import { renderComponent, renderRoute } from '../../test-utils'
 import userEvent from '@testing-library/user-event'
 import nock from 'nock'
 import Register from '../Register.tsx'
@@ -76,7 +76,102 @@ describe('User Registration', () => {
 
     expect(errorMessage).not.toBeNull()
   })
+  it('can return code 500 and display red alert message', async () => {
+    //ARRANGE
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      isError: false,
+      data: {user: {stuff: true}},
+      user: {sub: 'test id'},
+      getAccessTokenSilently: () => 'fake'
+    })
+    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+      isLoading:false,
+      isError:false,
+      data: { user: true },
+      add: {
+        mutateAsync: () => {return 500},
+      },
+    })
 
+    //ACT
+    const screen = renderRoute('/register')
+    
+    const submitButton = await screen.findByTestId('submit-button')
+
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Notify Jean Pierre!')
+
+    expect(alertMessage).toBeVisible()
+  })
+  it('can return code 409 and display user-name-in-use message', async () => {
+    //ARRANGE
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      isError: false,
+      data: {user: {stuff: true}},
+      user: {sub: 'test id'},
+      getAccessTokenSilently: () => 'fake'
+    })
+    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+      isLoading:false,
+      isError:false,
+      data: { user: true },
+      add: {
+        mutateAsync: () => {return 409},
+      },
+    })
+
+    //ACT
+    const screen = renderRoute('/register')
+    
+    const submitButton = await screen.findByTestId('submit-button')
+
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Be more original!')
+
+    expect(alertMessage).toBeVisible()
+  })
+  it('can return code 201 and display successful addUser message', async () => {
+    //ARRANGE
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      isError: false,
+      data: {user: {stuff: true}},
+      user: {sub: 'test id'},
+      getAccessTokenSilently: () => 'fake'
+    })
+    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+      isLoading:false,
+      isError:false,
+      data: { user: true },
+      add: {
+        mutateAsync: () => {return 201},
+      },
+    })
+
+    //ACT
+    const screen = renderRoute('/register')
+    
+    const submitButton = await screen.findByTestId('submit-button')
+
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Profile Updated!')
+
+    expect(alertMessage).toBeVisible()
+  })
   it('Tries to add a user when child form is submitted', async () => {
     let submissionAttempted = false
 

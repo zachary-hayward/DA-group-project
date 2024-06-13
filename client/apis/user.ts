@@ -20,10 +20,10 @@ interface AddUserFunction {
 export async function addUser({
   userData,
   token,
-}: AddUserFunction): Promise<User> {
+}: AddUserFunction): Promise<number> {
   return await request
     .post(`${rootURL}`)
     .set('Authorization', `Bearer ${token}`)
     .send({ userData })
-    .then((res) => res.body.user)
+    .then((res) => res.status)
 }
