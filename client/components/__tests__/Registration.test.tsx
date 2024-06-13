@@ -132,7 +132,7 @@ describe('User Registration', () => {
     ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
       isLoading: false,
       isError: false,
-      data: { user: true },
+      data: { user: {username: 'beans'} },
 
       mutateAsync: () => {
         return { status: 201 }

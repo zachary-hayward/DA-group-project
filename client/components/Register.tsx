@@ -4,6 +4,7 @@ import { useAddUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
+import { userData } from 'three/examples/jsm/nodes/Nodes.js'
 
 const successMessage = {
   text: 'Now get out there and drink some wine',
@@ -23,6 +24,7 @@ const duplicateNameMessage = {
 
 export default function Register() {
   const [alert, setAlert] = useState(false)
+  const [username, setUsername] = useState('')
   const [alertData, setAlertData] = useState({
     text: '',
     messageBody: '',
@@ -35,6 +37,7 @@ export default function Register() {
   const navigate = useNavigate()
 
   const handleAdd = async (userData: UserData) => {
+    setUsername(userData.username)
     //mutate here
     const token = await getAccessTokenSilently()
     let v
@@ -61,8 +64,8 @@ export default function Register() {
 
   //This is screwy because of the navigate('/register') in Home, I think. Pretty sure it goes to / then back to /register
   useEffect(() => {
-    if (!alert && alertData.messageBody === successMessage.messageBody) {
-      navigate('/') 
+    if (!alert && alertData.messageBody === successMessage.messageBody && username !== '') {
+      navigate(`/profiles/${username}`) 
     }
   }, [alert, alertData])
 
