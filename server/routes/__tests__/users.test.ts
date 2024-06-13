@@ -46,7 +46,7 @@ afterAll(() => {
   vi.restoreAllMocks()
 })
 
-describe('GET api/v1/users/checkAuth', () => {
+describe('GET api/v1/users/checkRegistered', () => {
   it('should return a user, if one matches', async () => {
     vi.mocked(usersDb.getUserByAuthId).mockResolvedValue(mockUsers[0])
 

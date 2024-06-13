@@ -7,7 +7,7 @@ export async function getUser(token: Promise<string>): Promise<{ user: User }> {
   const tvalue = await token
 
   return request
-    .get(`${rootURL}/checkAuth`)
+    .get(`${rootURL}/checkRegistered`)
     .set('Authorization', `Bearer ${tvalue}`)
     .then((res) => res.body)
 }

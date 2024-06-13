@@ -19,14 +19,17 @@ describe('user hook tests', () => {
       user: { sub: '100%' },
     })
 
-    nock(document.baseURI).persist().get('/api/v1/users/checkAuth').reply(200, {
-      id: 1,
-      auth0Id: 'auth0|123',
-      username: 'paige',
-      full_name: 'Paige turner',
-      location: 'Auckland',
-      image: 'ava-03.png',
-    })
+    nock(document.baseURI)
+      .persist()
+      .get('/api/v1/users/checkRegistered')
+      .reply(200, {
+        id: 1,
+        auth0Id: 'auth0|123',
+        username: 'paige',
+        full_name: 'Paige turner',
+        location: 'Auckland',
+        image: 'ava-03.png',
+      })
     const screen = renderRoute('/register')
 
     const paige = screen.findByText('paige')
