@@ -3,6 +3,7 @@ import { createRoutesFromElements, Route } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
 import App from './components/App'
 import Home from './components/Home'
+import Register from './components/Register'
 
 export const routes = createRoutesFromElements(
   <>
@@ -13,7 +14,7 @@ export const routes = createRoutesFromElements(
         <Route index element={<div>AddPost</div>} />
         <Route path=":id" element={<div>Post</div>} />
       </Route>
-      <Route path="register" element={<div>Register</div>} />
+      <Route path="/register" element={<Register />} />
       <Route path="profiles">
         <Route index element={<div>AllProfiles </div>} />
         <Route path=":username" element={<div>Profile</div>} />
@@ -25,5 +26,5 @@ export const routes = createRoutesFromElements(
       </Route>
     </Route>
     <Route path="/login" element={<LandingPage />} />
-  </>
+  </>,
 )

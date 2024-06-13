@@ -11,7 +11,7 @@ module.exports = {
           blue: '#364da1',
           wine: '#4f0404'
         }
-      }
+      },
     },
   },
   plugins: [],
