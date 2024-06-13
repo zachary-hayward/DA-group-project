@@ -39,7 +39,7 @@ describe('<AllGroups />', () => {
     // Act
     const screen = renderRoute('/groups')
 
-    // Assert
+    // Assertt
     const name = await screen.findByText('eli')
     expect(name).toBeVisible()
     expect(scope.isDone()).toBe(true)
