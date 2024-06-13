@@ -15,13 +15,6 @@ beforeAll(() => {
   nock.disableNetConnect()
 })
 
-//https://stackoverflow.com/questions/74930606/mock-react-router-dom-useparams-hook-in-vitest
-//https://vitest.dev/api/vi.html#vi-mock
-
-//https://stackoverflow.com/questions/72732768/vue-how-to-mock-auth0-for-testing-with-vitest
-// If you need to use variables inside the factory, try vi.doMock.
-// It works the same way but isn't hoisted. Beware that it only mocks subsequent imports.
-
 afterEach(() => nock.cleanAll())
 
 describe('User Registration', () => {
@@ -96,7 +89,7 @@ describe('User Registration', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
       add: {
-        mutate: () => {
+        mutateAsync: () => {
           submissionAttempted = true
         },
       },

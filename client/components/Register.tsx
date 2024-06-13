@@ -19,14 +19,22 @@ export default function Register() {
     //mutate here
     const token = await getAccessTokenSilently()
     try {
-      users.add.mutate({ userData, token })
-      setAlertData((prev) => ({
-        ...prev,
-        messageBody: 'Now get out there and drink some wine',
-        text: 'Profile Updated!',
-        colour: 'green',
-      }))
-
+      const v = await users.add.mutateAsync({ userData, token })
+      if (!v) {
+        setAlertData((prev) => ({
+          ...prev,
+          messageBody: 'Notify Jean Pierre!',
+          text: 'Something Went Wrong!',
+          colour: 'red',
+        }))
+      } else {
+        setAlertData((prev) => ({
+          ...prev,
+          messageBody: 'Now get out there and drink some wine',
+          text: 'Profile Updated!',
+          colour: 'green',
+        }))
+      }
       setAlert(() => true)
     } catch (error) {
       setAlertData((prev) => ({
@@ -56,18 +64,21 @@ export default function Register() {
   }
 
   return (
-    <div className='relative flex flex-grow justify-center'>
-      <div className='absolute inset-0 z-0 bg-kks-wine w-full'></div>
-      <div className='absolute inset-0 z-0 bg-kks-blue w-1/2'></div>
+    <div className="relative flex flex-grow justify-center">
+      <div className="absolute inset-0 z-0 bg-kks-wine w-full"></div>
+      <div className="absolute inset-0 z-0 bg-kks-blue w-1/2"></div>
       <div className="relative container z-10 bg-white flex flex-col space-y-2 sm:space-y-4 lg:space-y-8 xl:space-y-12 w-full sm:max-w-[640px] border border-1 border-black">
         <div className="flex flex-row-reverse">
-          <button className="btn-blue bg-kks-blue m-2 ">View All Profiles</button>
+          <button className="btn-blue bg-kks-blue m-2 ">
+            View All Profiles
+          </button>
         </div>
         <p className="hidden md:block text-center">
           Welcome! Give Jean-Pierre your details.
-          <br/>It&apos;l be great!
+          <br />
+          It&apos;l be great!
         </p>
-        <div className='md:border md:border-2 md:border-black md:bg-kks-grey sm:w-[380px] p-2 mx-auto'>
+        <div className="md:border md:border-2 md:border-black md:bg-kks-grey sm:w-[380px] p-2 mx-auto">
           <UserProfileForm
             onSubmit={handleAdd}
             {...{
