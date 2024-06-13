@@ -12,7 +12,7 @@ beforeAll(() => nock.disableNetConnect())
 afterEach(() => nock.cleanAll())
 
 describe('user hook tests', () => {
-  it.skip('can fetch a user', () => {
+  it('can fetch a user', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
@@ -39,7 +39,7 @@ describe('user hook tests', () => {
     expect(paige).not.toBeNull()
   })
 
-  it.skip('can add a user', async () => {
+  it('can add a user', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
@@ -48,6 +48,16 @@ describe('user hook tests', () => {
       user: { sub: 'this is a test value' },
     })
 
+    
+    nock(document.baseURI).persist().get('/api/v1/users/checkRegistered')
+    .reply(200, {
+      id: 1,
+      auth0Id: 'auth0|123',
+      username: 'paige',
+      full_name: 'Paige turner',
+      location: 'Auckland',
+      image: 'ava-03.png',
+    })
     nock(document.baseURI).persist().post('/api/v1/users').reply(201)
 
     const { ...screen } = renderRoute('/register')
@@ -61,13 +71,22 @@ describe('user hook tests', () => {
     expect(successText).not.toBeNull()
   })
 
-  it.skip('fails when trying to add a user with existing username', async () => {
+  it('fails when trying to add a user with existing username', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
       isAuthenticated: true,
       isLoading: false,
       user: { sub: 'this is a test value' },
+    })
+    nock(document.baseURI).persist().get('/api/v1/users/checkRegistered')
+    .reply(200, {
+      id: 1,
+      auth0Id: 'auth0|123',
+      username: 'paige',
+      full_name: 'Paige turner',
+      location: 'Auckland',
+      image: 'ava-03.png',
     })
 
     nock(document.baseURI).persist().post('/api/v1/users').reply(409)
