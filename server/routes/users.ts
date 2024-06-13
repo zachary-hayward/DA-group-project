@@ -34,12 +34,32 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
 //Check user exists
 // GET /api/v1/users
 router.get('/checkRegistered', checkJwt, async (req: JwtRequest, res) => {
+  if (!req.auth?.sub) {
+    res.sendStatus(401)
+    return
+  }
   const authId = req.auth?.sub
   try {
     const userInfo = await db.getUserByAuthId(authId)
     res.status(200).json({ user: userInfo })
   } catch (error) {
     console.error(`Error checking user via authid:`, error)
+    res.sendStatus(500)
+  }
+})
+
+//GET /api/v1/users/:username
+router.get('/:username', checkJwt, async (req: JwtRequest, res) => {
+  if (!req.auth?.sub) {
+    res.sendStatus(401)
+    return
+  }
+
+  try {
+    const username = req.params.username
+    const user = await db.getUserByUsername(username)
+    res.status(200).json({ user })
+  } catch (error) {
     res.sendStatus(500)
   }
 })

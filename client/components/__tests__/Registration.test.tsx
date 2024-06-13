@@ -18,32 +18,12 @@ beforeAll(() => {
 afterEach(() => nock.cleanAll())
 
 describe('User Registration', () => {
-  it('Displays a loading indicator', () => {
+  it('display an error if no user found', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
-      user: { sub: 'test id' },
-      getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
-    })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      isLoading: true,
-    })
-
-    const screen = renderComponent(<Register />)
-    //const screen = renderRoute('/register')
-
-    const loading = screen.getByText('Loading...')
-
-    expect(loading).not.toBeNull()
-  })
-  it('Displays an error message', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
-      isAuthenticated: false,
-      isLoading: false,
-      user: { sub: 'test id' },
+      user: undefined,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,31 +34,10 @@ describe('User Registration', () => {
 
     const screen = renderComponent(<Register />)
 
-    const errorMessage = screen.getByText(
-      'Issue trying to retrieve user testing',
-    )
-
+    const errorMessage = screen.getByText('No User Found')
     expect(errorMessage).not.toBeNull()
   })
-  it('Returns a message if no data found', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
-      isAuthenticated: false,
-      isLoading: false,
-      user: { sub: 'test id' },
-      getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
-    })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      data: undefined,
-    })
 
-    const screen = renderComponent(<Register />)
-
-    const errorMessage = screen.getByText('No Data Found')
-
-    expect(errorMessage).not.toBeNull()
-  })
   it('can return code 500 and display red alert message', async () => {
     //ARRANGE
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -91,14 +50,13 @@ describe('User Registration', () => {
       getAccessTokenSilently: () => 'fake',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
       isLoading: false,
       isError: false,
       data: { user: true },
-      add: {
-        mutateAsync: () => {
-          return { status: 500 }
-        },
+
+      mutateAsync: () => {
+        return { status: 500 }
       },
     })
 
@@ -126,14 +84,13 @@ describe('User Registration', () => {
       getAccessTokenSilently: () => 'fake',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
       isLoading: false,
       isError: false,
       data: { user: true },
-      add: {
-        mutateAsync: () => {
-          return { body: { status: 409, errorMessage: 'duplicate username' } }
-        },
+
+      mutateAsync: () => {
+        return { body: { status: 409, errorMessage: 'duplicate username' } }
       },
     })
 
@@ -162,14 +119,13 @@ describe('User Registration', () => {
       getAccessTokenSilently: () => 'fake',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
       isLoading: false,
       isError: false,
       data: { user: true },
-      add: {
-        mutateAsync: () => {
-          return { status: 201 }
-        },
+
+      mutateAsync: () => {
+        return { status: 201 }
       },
     })
 
@@ -192,15 +148,15 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      add: {
-        mutateAsync: () => {
-          submissionAttempted = true
-        },
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
+      mutateAsync: () => {
+        submissionAttempted = true
       },
+
       data: {
         user: {},
       },
@@ -218,6 +174,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -253,6 +210,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

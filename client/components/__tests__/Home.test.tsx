@@ -57,6 +57,7 @@ describe('Home.tsx', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: true,
+      user: true,
       // isLoading: false,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

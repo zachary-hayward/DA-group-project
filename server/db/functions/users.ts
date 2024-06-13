@@ -7,7 +7,7 @@ export async function getUserByAuthId(authId: string | undefined) {
   return await db('users').where('auth0_id', authId).first()
 }
 
-export async function addUser(data: UserData) : Promise<{id:number}>{
+export async function addUser(data: UserData): Promise<{ id: number }> {
   const snakeCase: UserSnakeCase = {
     auth0_id: data.auth0Id,
     username: data.username ?? 'User',
@@ -16,12 +16,14 @@ export async function addUser(data: UserData) : Promise<{id:number}>{
     image: data.image ?? 'ava-01.png',
   }
 
-  const matchingUser =  await db('users').where({username: data.username}).first()
-  
-  if(!matchingUser){
+  const matchingUser = await db('users')
+    .where({ username: data.username })
+    .first()
+
+  if (!matchingUser) {
     return await db('users').insert(snakeCase).returning('id')
   }
-  return {id:-1} //-1 is a failure state
+  return { id: -1 } //-1 is a failure state
 }
 
 export async function editUser(user: User) {
@@ -36,4 +38,8 @@ export async function editUser(user: User) {
     .where({ auth0_id: user.auth0Id })
     .first()
     .update(snakeCase)
+}
+
+export async function getUserByUsername(username: string) {
+  return await db('users').where({ username }).first()
 }

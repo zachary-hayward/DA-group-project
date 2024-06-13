@@ -66,7 +66,6 @@ export default function UserProfileForm(props: Props) {
           type="text"
           name="location"
           id="location"
-          placeholder="Enter your location"
           value={formState.location}
           onChange={handleChange}
           className="border-2 border-black rounded"

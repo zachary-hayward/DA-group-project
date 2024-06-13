@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { UserData } from '../../models/user'
-import { useUser } from '../hooks/user'
+import { useAddUser, useUser, useUserMutation } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -29,14 +29,14 @@ export default function Register() {
   })
 
   const { user, getAccessTokenSilently } = useAuth0()
-  const users = useUser()
+  const users = useAddUser()
 
   const handleAdd = async (userData: UserData) => {
     //mutate here
     const token = await getAccessTokenSilently()
     let v
     try {
-      v = await users.add.mutateAsync({ userData, token })
+      v = await users.mutateAsync({ userData, token })
       if (v?.status === 500) {
         setAlertData(() => errorMessage)
       } else if (v.status === 201) {
@@ -58,14 +58,14 @@ export default function Register() {
 
   //now need to notify there was update
 
-  if (users.isLoading) {
-    return <span>Loading...</span>
-  }
-  if (users.isError)
-    return <span>Issue trying to retrieve user {`${users.error}`}</span>
+  // if (user.isLoading) {
+  //   return <span>Loading...</span>
+  // }
+  // if (users.isError)
+  //   return <span>Issue trying to retrieve user {`${users.error}`}</span>
 
-  if (!users.data) {
-    return <p>No Data Found</p>
+  if (!user) {
+    return <p>No User Found</p>
   }
 
   return (
