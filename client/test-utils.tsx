@@ -25,11 +25,11 @@ export function renderRoute(location: string) {
         retry: false,
       },
     },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: () => {},
-    },
+    // logger: {
+    //   log: console.log,
+    //   warn: console.warn,
+    //   error: () => {},
+    // },
   })
 
   const user = userEvent.setup()
