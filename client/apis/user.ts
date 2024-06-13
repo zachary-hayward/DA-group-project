@@ -17,13 +17,10 @@ interface AddUserFunction {
   token: string
 }
 
-export async function addUser({
-  userData,
-  token,
-}: AddUserFunction): Promise<number> {
+export async function addUser({ userData, token }: AddUserFunction) {
   return await request
     .post(`${rootURL}`)
     .set('Authorization', `Bearer ${token}`)
     .send({ userData })
-    .then((res) => res.status)
+    .then((res) => res)
 }

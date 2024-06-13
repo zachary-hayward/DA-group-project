@@ -11,9 +11,10 @@ export function useUser() {
     queryKey: ['users'],
     queryFn: async () => {
       const token = await getAccessTokenSilently()
-      await API.getUser(token)
-  },
-enabled: !!user,})
+      return await API.getUser(token)
+    },
+    enabled: !!user,
+  })
 
   return {
     ...query,

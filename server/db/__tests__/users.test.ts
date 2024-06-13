@@ -44,11 +44,10 @@ describe('addUser tests', () => {
       location: 'Not Christchurch',
       image: 'ava-13.png',
     }
-    
-    const {id} = await userDb.addUser(addNewUser)
+
+    const { id } = await userDb.addUser(addNewUser)
 
     expect(id).toBe(-1)
-  
   })
   it('adds a user', async () => {
     const toAdd = {

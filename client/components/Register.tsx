@@ -4,6 +4,22 @@ import { useUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
 
+const successMessage = {
+  text: 'Now get out there and drink some wine',
+  messageBody: 'Profile Updated!',
+  colour: 'green',
+}
+const errorMessage = {
+  messageBody: 'Notify Jean Pierre!',
+  text: 'Something Went Wrong!',
+  colour: 'red',
+}
+const duplicateNameMessage = {
+  messageBody: 'Be more original!',
+  text: 'Username already in use!',
+  colour: 'orange',
+}
+
 export default function Register() {
   const [alert, setAlert] = useState(false)
   const [alertData, setAlertData] = useState({
@@ -18,39 +34,20 @@ export default function Register() {
   const handleAdd = async (userData: UserData) => {
     //mutate here
     const token = await getAccessTokenSilently()
+    let v
     try {
-      const v = await users.add.mutateAsync({ userData, token })
-      if (v === 500) {
-        setAlertData((prev) => ({
-          ...prev,
-          messageBody: 'Notify Jean Pierre!',
-          text: 'Something Went Wrong!',
-          colour: 'red',
-        }))
-      } else if(v === 409){ 
-        setAlertData((prev) => ({
-          ...prev,
-          messageBody: 'Be more original!',
-          text: 'Username already in use!',
-          colour: 'orange',
-        }))
-      }
-      else if(v === 201){
-        setAlertData((prev) => ({
-          ...prev,
-          messageBody: 'Now get out there and drink some wine',
-          text: 'Profile Updated!',
-          colour: 'green',
-        }))
+      v = await users.add.mutateAsync({ userData, token })
+      if (v?.status === 500) {
+        setAlertData(() => errorMessage)
+      } else if (v.status === 201) {
+        setAlertData(() => successMessage)
+      } else if (v.body.status === 409) {
+        setAlertData(() => duplicateNameMessage)
       }
       setAlert(() => true)
-    } catch (error) {
-      setAlertData((prev) => ({
-        ...prev,
-        messageBody: 'Notify Jean Pierre!',
-        text: 'Something Went Wrong!',
-        colour: 'red',
-      }))
+    } catch (error: unknown) {
+      setAlertData(() => errorMessage)
+
       setAlert(() => true)
     } finally {
       setTimeout(() => {
@@ -84,7 +81,7 @@ export default function Register() {
         <p className="hidden md:block text-center">
           Welcome! Give Jean-Pierre your details.
           <br />
-          It&apos;l be great!
+          It&apos;ll be great!
         </p>
         <div className="md:border md:border-2 md:border-black md:bg-kks-grey sm:w-[380px] p-2 mx-auto">
           <UserProfileForm
@@ -99,7 +96,7 @@ export default function Register() {
           />
         </div>
         <div
-          className={`flex ${alertData.colour === 'green' ? 'bg-green-100' : 'bg-red-100'} rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
+          className={`flex bg-${alertData.colour}-100 rounded-lg p-4 mb-4 text-sm ${alertData.colour === 'green' ? 'text-green-700' : 'text-red-700'} ${alert ? '' : 'hidden'}`}
           role="alert"
         >
           <svg

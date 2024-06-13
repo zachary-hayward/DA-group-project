@@ -109,4 +109,15 @@ describe('POST api/v1/users', () => {
       .send({})
     expect(res.statusCode).toBe(500)
   })
+  it('should return a 200 (curse you superagent) and an error message if there is a duplicate username', async () => {
+    vi.mocked(usersDb.addUser).mockResolvedValue({ id: -1 })
+
+    const res = await request(server)
+      .post('/api/v1/users')
+      .set('Authorization', 'Bearer mock-token')
+      .send({})
+
+    expect(res.statusCode).toBe(200)
+    expect(res.body.status).toBe(409)
+  })
 })

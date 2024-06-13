@@ -18,13 +18,12 @@ router.post('/', checkJwt, async (req: JwtRequest, res) => {
   try {
     const result = await db.addUser(req.body.userData)
     const id = result.id
-    if(id !== -1){
+    if (id !== -1) {
       const url = `/api/v1/users/${id}`
       res.setHeader('Location', url)
       res.status(201).json({ location: url })
-    }
-    else{
-      res.sendStatus(409) //CONFLICT
+    } else {
+      res.status(200).json({ status: 409, errorMessage: 'duplicate username' }) //CONFLICT
     }
   } catch (error) {
     console.error(`Error posting userdata:`, error)

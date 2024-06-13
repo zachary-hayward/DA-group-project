@@ -23,6 +23,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: { sub: 'test id' },
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,6 +43,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: { sub: 'test id' },
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,6 +65,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: { sub: 'test id' },
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,22 +86,25 @@ describe('User Registration', () => {
       isAuthenticated: true,
       isLoading: false,
       isError: false,
-      data: {user: {stuff: true}},
-      user: {sub: 'test id'},
-      getAccessTokenSilently: () => 'fake'
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      isLoading:false,
-      isError:false,
+      isLoading: false,
+      isError: false,
       data: { user: true },
       add: {
-        mutateAsync: () => {return 500},
+        mutateAsync: () => {
+          return { status: 500 }
+        },
       },
     })
 
     //ACT
     const screen = renderRoute('/register')
-    
+
     const submitButton = await screen.findByTestId('submit-button')
 
     await userEvent.click(submitButton)
@@ -115,22 +121,25 @@ describe('User Registration', () => {
       isAuthenticated: true,
       isLoading: false,
       isError: false,
-      data: {user: {stuff: true}},
-      user: {sub: 'test id'},
-      getAccessTokenSilently: () => 'fake'
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      isLoading:false,
-      isError:false,
+      isLoading: false,
+      isError: false,
       data: { user: true },
       add: {
-        mutateAsync: () => {return 409},
+        mutateAsync: () => {
+          return { body: { status: 409, errorMessage: 'duplicate username' } }
+        },
       },
     })
 
     //ACT
     const screen = renderRoute('/register')
-    
+
     const submitButton = await screen.findByTestId('submit-button')
 
     await userEvent.click(submitButton)
@@ -140,6 +149,7 @@ describe('User Registration', () => {
 
     expect(alertMessage).toBeVisible()
   })
+
   it('can return code 201 and display successful addUser message', async () => {
     //ARRANGE
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -147,22 +157,25 @@ describe('User Registration', () => {
       isAuthenticated: true,
       isLoading: false,
       isError: false,
-      data: {user: {stuff: true}},
-      user: {sub: 'test id'},
-      getAccessTokenSilently: () => 'fake'
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      isLoading:false,
-      isError:false,
+      isLoading: false,
+      isError: false,
       data: { user: true },
       add: {
-        mutateAsync: () => {return 201},
+        mutateAsync: () => {
+          return { status: 201 }
+        },
       },
     })
 
     //ACT
     const screen = renderRoute('/register')
-    
+
     const submitButton = await screen.findByTestId('submit-button')
 
     await userEvent.click(submitButton)
