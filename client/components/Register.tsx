@@ -4,7 +4,6 @@ import { useAddUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
-import { userData } from 'three/examples/jsm/nodes/Nodes.js'
 
 const successMessage = {
   text: 'Now get out there and drink some wine',
@@ -67,7 +66,7 @@ export default function Register() {
     if (!alert && alertData.messageBody === successMessage.messageBody && username !== '') {
       navigate(`/profiles/${username}`) 
     }
-  }, [alert, alertData])
+  }, [alert, alertData, username, navigate])
 
   if (!user) {
     return <p>No User Found</p>

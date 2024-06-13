@@ -32,6 +32,7 @@ const mockAuthenticatedUser = {
 }
 
 beforeAll(() => {
+  vi.restoreAllMocks()
   vi.mocked(checkJwt).mockImplementation(
     async (req: JwtRequest, res: Response, next: NextFunction) => {
       req.auth = {
@@ -66,7 +67,6 @@ describe('GET api/v1/users/checkRegistered', () => {
       }
     `)
   })
-
   it('should return a status 500 if an error occurs', async () => {
     vi.mocked(usersDb.getUserByAuthId).mockRejectedValue('fake')
     const res = await request(server).get('/api/v1/users/checkRegistered')

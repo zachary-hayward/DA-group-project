@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router'
 import { useUser } from '../hooks/user.ts'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useEffect } from 'react'
-import { useIsFetching } from '@tanstack/react-query'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -14,7 +13,7 @@ export default function Home() {
     if (!isFetching && !isLoading && !isError && data && !data.user) {
       navigate('/register')
     }
-  }, [data, isLoading, isError, error, user, navigate])
+  }, [data, isFetching, isLoading, isError, error, user, navigate])
 
   if (isLoading) return <div>Loading...</div>
 

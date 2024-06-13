@@ -1,6 +1,5 @@
 import { it, expect, describe, vi, afterAll, beforeAll } from 'vitest'
 import request from 'supertest'
-import * as usersDb from '../../db/functions/users'
 import server from '../../server.ts'
 import checkJwt, { JwtRequest } from '../../auth0.ts'
 import { Response, NextFunction } from 'express'

@@ -9,10 +9,9 @@ import {
   beforeEach,
 } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import { renderComponent, renderRoute } from '../../test-utils'
+import { renderComponent } from '../../test-utils'
 import userEvent from '@testing-library/user-event'
 import nock from 'nock'
-import Register from '../Register.tsx'
 import * as auth0 from '@auth0/auth0-react'
 import * as useUser from '../../hooks/user.ts'
 import UserProfilePage from '../UserProfilePage.tsx'
@@ -99,6 +98,7 @@ describe('User Profile Page', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useUserByUsername = vi.fn().mockReturnValue({
       mutateAsync: () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ;(useUser as any).useUserByUsername = vi
           .fn()
           .mockReturnValue({ data: { user: { username: 'brenda_(evil)' } } })
@@ -108,8 +108,10 @@ describe('User Profile Page', () => {
         user: { auth0Id: 'mockID', username: 'brenda' },
       },
     })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(useUser as any).useEditUser = vi.fn().mockReturnValue({
       mutateAsync: () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ;(useUser as any).useUserByUsername = vi
           .fn()
           .mockReturnValue({ data: { user: { username: 'brenda_(evil)' } } })
