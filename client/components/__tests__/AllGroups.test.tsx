@@ -1,8 +1,35 @@
 // @vitest-environment jsdom
-import { describe, it, expect, beforeAll, afterEach } from 'vitest'
+import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest'
 import nock from 'nock'
 
 import { renderRoute } from '../../test-utils.tsx'
+import { Auth0ContextInterface, useAuth0 } from '@auth0/auth0-react'
+import { getUser } from '../../apis/user.ts'
+import { User } from '../../../models/user.ts'
+
+vi.mock('@auth0/auth0-react')
+vi.mock('../../apis/user')
+
+const useAuth0Mock = vi.mocked(useAuth0)
+
+beforeEach(async () => {
+  useAuth0Mock.mockReturnValue({
+    isAuthenticated: true,
+    user: { sub: 'auth0|123' },
+    logout: vi.fn(),
+    loginWithRedirect: vi.fn(),
+  } as unknown as Auth0ContextInterface<User>)
+  vi.mocked(getUser).mockResolvedValue({
+    user: {
+      id: 1,
+      auth0Id: 'auth0|123',
+      username: 'paige',
+      fullName: 'Paige Turner',
+      location: 'Auckland',
+      image: 'ava-03.png',
+    },
+  })
+})
 
 beforeAll(() => {
   nock.disableNetConnect()
