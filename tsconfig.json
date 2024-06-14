@@ -25,7 +25,7 @@
     "allowJs": true
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */,
     "noEmit": true,
-    "types": ["vite/client"]
+    "types": ["vite/client", "vitest/jsdom"]
   },
   "include": ["server/**/*", "client/**/*", "vite.config.js"]
 }
