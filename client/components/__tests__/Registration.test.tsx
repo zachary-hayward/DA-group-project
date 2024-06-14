@@ -1,15 +1,25 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import { renderComponent } from '../../test-utils'
+import { renderComponent, renderRoute } from '../../test-utils'
 import userEvent from '@testing-library/user-event'
 import nock from 'nock'
 import Register from '../Register.tsx'
 import * as auth0 from '@auth0/auth0-react'
 import * as useUser from '../../hooks/user.ts'
+import * as reactRouterDom from 'react-router-dom'
 
 vi.mock('@auth0/auth0-react')
 vi.mock('../../hooks/user.ts')
+vi.mock("react-router-dom", async () => {
+  const mod = await vi.importActual<typeof import("react-router-dom")>(
+    "react-router-dom"
+  );
+  return {
+    ...mod,
+    useNavigate: () => vi.fn()
+  };
+})
 
 beforeAll(() => {
   nock.disableNetConnect()
@@ -18,30 +28,12 @@ beforeAll(() => {
 afterEach(() => nock.cleanAll())
 
 describe('User Registration', () => {
-  it('Displays a loading indicator', () => {
+  it('display an error if no user found', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
-      getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
-    })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      isLoading: true,
-    })
-
-    const screen = renderComponent(<Register />)
-    //const screen = renderRoute('/register')
-
-    const loading = screen.getByText('Loading...')
-
-    expect(loading).not.toBeNull()
-  })
-  it('Displays an error message', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
-      isAuthenticated: false,
-      isLoading: false,
+      user: undefined,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,31 +44,125 @@ describe('User Registration', () => {
 
     const screen = renderComponent(<Register />)
 
-    const errorMessage = screen.getByText(
-      'Issue trying to retrieve user testing',
-    )
-
+    const errorMessage = screen.getByText('No User Found')
     expect(errorMessage).not.toBeNull()
   })
-  it('Returns a message if no data found', () => {
+
+  it('can return code 500 and display red alert message', async () => {
+    //ARRANGE
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
-      isAuthenticated: false,
+      isAuthenticated: true,
       isLoading: false,
-      getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
+      isError: false,
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      data: undefined,
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: { user: true },
+
+      mutateAsync: () => {
+        return { status: 500 }
+      },
     })
 
-    const screen = renderComponent(<Register />)
+    //ACT
+    const screen = renderRoute('/register') 
 
-    const errorMessage = screen.getByText('No Data Found')
+    const submitButton = await screen.findByTestId('submit-button')
 
-    expect(errorMessage).not.toBeNull()
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Notify Jean Pierre!')
+
+    expect(alertMessage).toBeVisible()
+  })
+  it('can return code 409 and display user-name-in-use message', async () => {
+    //ARRANGE
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      isError: false,
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: { user: true },
+
+      mutateAsync: () => {
+        return { body: { status: 409, errorMessage: 'duplicate username' } }
+      },
+    })
+
+    //ACT
+    const screen = renderRoute('/register')
+
+    const submitButton = await screen.findByTestId('submit-button')
+
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Be more original!')
+
+    expect(alertMessage).toBeVisible()
   })
 
+  it('can return code 201 and display successful addUser message', async () => {
+    //ARRANGE
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      isError: false,
+      data: { user: { stuff: true } },
+      user: { sub: 'test id' },
+      getAccessTokenSilently: () => 'fake',
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
+      isLoading: false,
+      isError: false,
+      data: { user: {username: 'beans'} },
+
+      mutateAsync: () => {
+        return { status: 201 }
+      },
+    })
+
+    const screen = renderRoute('/register')
+
+    const submitButton = await screen.findByTestId('submit-button')
+
+    //ACT
+    await userEvent.click(submitButton)
+
+    //ASSERT
+    const alertMessage = await screen.findByText('Profile Updated!')
+
+    expect(alertMessage).toBeVisible()
+    
+    const spy = vi.spyOn(reactRouterDom, 'useNavigate')
+
+    const didNavigate = await vi.waitFor(async () => {
+        expect(spy).toHaveBeenCalled()    
+        return true
+      },
+      {
+        timeout: 2500
+      }
+    )
+    expect(didNavigate).toBe(true)
+  })
   it('Tries to add a user when child form is submitted', async () => {
     let submissionAttempted = false
 
@@ -84,15 +170,15 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(useUser as any).useUser = vi.fn().mockReturnValue({
-      add: {
-        mutateAsync: () => {
-          submissionAttempted = true
-        },
+    ;(useUser as any).useAddUser = vi.fn().mockReturnValue({
+      mutateAsync: () => {
+        submissionAttempted = true
       },
+
       data: {
         user: {},
       },
@@ -110,6 +196,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -145,6 +232,7 @@ describe('User Registration', () => {
     ;(auth0 as any).useAuth0 = vi.fn().mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
+      user: true,
       getAccessTokenSilently: () => 'sdsdsdsdsdsdsdsdsd',
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

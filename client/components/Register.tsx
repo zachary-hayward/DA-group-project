@@ -1,66 +1,75 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UserData } from '../../models/user'
-import { useUser } from '../hooks/user'
+import { useAddUser } from '../hooks/user'
 import UserProfileForm from './UserProfileForm'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
+
+const successMessage = {
+  text: 'Now get out there and drink some wine',
+  messageBody: 'Profile Updated!',
+  colour: 'green',
+}
+const errorMessage = {
+  messageBody: 'Notify Jean Pierre!',
+  text: 'Something Went Wrong!',
+  colour: 'red',
+}
+const duplicateNameMessage = {
+  messageBody: 'Be more original!',
+  text: 'Username already in use!',
+  colour: 'orange',
+}
 
 export default function Register() {
   const [alert, setAlert] = useState(false)
+  const [username, setUsername] = useState('')
   const [alertData, setAlertData] = useState({
-    text: 'Now get out there and drink some wine',
-    messageBody: 'Profile Updated!',
-    colour: 'green',
+    text: '',
+    messageBody: '',
+    colour: '',
   })
 
   const { user, getAccessTokenSilently } = useAuth0()
-  const users = useUser()
+  const users = useAddUser()
+
+  const navigate = useNavigate()
 
   const handleAdd = async (userData: UserData) => {
+    setUsername(userData.username)
     //mutate here
     const token = await getAccessTokenSilently()
+    let v
     try {
-      const v = await users.add.mutateAsync({ userData, token })
-      if (!v) {
-        setAlertData((prev) => ({
-          ...prev,
-          messageBody: 'Notify Jean Pierre!',
-          text: 'Something Went Wrong!',
-          colour: 'red',
-        }))
-      } else {
-        setAlertData((prev) => ({
-          ...prev,
-          messageBody: 'Now get out there and drink some wine',
-          text: 'Profile Updated!',
-          colour: 'green',
-        }))
+      v = await users.mutateAsync({ userData, token })
+      if (v?.status === 500) {
+        setAlertData(() => errorMessage)
+      } else if (v.status === 201) {
+        setAlertData(() => successMessage)
+      } else if (v.body.status === 409) {
+        setAlertData(() => duplicateNameMessage)
       }
       setAlert(() => true)
-    } catch (error) {
-      setAlertData((prev) => ({
-        ...prev,
-        messageBody: 'Notify Jean Pierre!',
-        text: 'Something Went Wrong!',
-        colour: 'red',
-      }))
+    } catch (error: unknown) {
+      setAlertData(() => errorMessage)
+
       setAlert(() => true)
     } finally {
       setTimeout(() => {
-        setAlert(() => false)
+        setAlert(() => false);
       }, 2000)
     }
   }
 
-  //now need to notify there was update
+  //This is screwy because of the navigate('/register') in Home, I think. Pretty sure it goes to / then back to /register
+  useEffect(() => {
+    if (!alert && alertData.messageBody === successMessage.messageBody && username !== '') {
+      navigate(`/profiles/${username}`) 
+    }
+  }, [alert, alertData, username, navigate])
 
-  if (users.isLoading) {
-    return <span>Loading...</span>
-  }
-  if (users.isError)
-    return <span>Issue trying to retrieve user {`${users.error}`}</span>
-
-  if (!users.data) {
-    return <p>No Data Found</p>
+  if (!user) {
+    return <p>No User Found</p>
   }
 
   return (
@@ -76,7 +85,7 @@ export default function Register() {
         <p className="hidden md:block text-center">
           Welcome! Give Jean-Pierre your details.
           <br />
-          It&apos;l be great!
+          It&apos;ll be great!
         </p>
         <div className="md:border md:border-2 md:border-black md:bg-kks-grey sm:w-[380px] p-2 mx-auto">
           <UserProfileForm

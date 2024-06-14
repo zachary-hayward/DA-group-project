@@ -5,18 +5,36 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import * as API from '../apis/user'
 
 export function useUser() {
-  const { getAccessTokenSilently } = useAuth0()
-  const token = getAccessTokenSilently()
+  const { user, getAccessTokenSilently } = useAuth0()
 
   const query = useQuery({
     queryKey: ['users'],
-    queryFn: async () => await API.getUser(token),
+    queryFn: async () => {
+      const token = await getAccessTokenSilently()
+      return await API.getUser(token)
+    },
+    enabled: !!user,
   })
 
   return {
     ...query,
     add: useAddUser(),
+    edit: useEditUser(),
   }
+}
+
+export function useUserByUsername(username: string) {
+  const { user, getAccessTokenSilently } = useAuth0()
+
+  const query = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const token = await getAccessTokenSilently()
+      return await API.getUserByUsername({ username, token })
+    },
+    enabled: !!user,
+  })
+  return query
 }
 
 export function useUserMutation<TData = unknown, TVariables = unknown>(
@@ -35,4 +53,8 @@ export function useUserMutation<TData = unknown, TVariables = unknown>(
 
 export function useAddUser() {
   return useUserMutation(API.addUser)
+}
+
+export function useEditUser() {
+  return useUserMutation(API.editUser)
 }
