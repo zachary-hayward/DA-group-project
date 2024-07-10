@@ -36,7 +36,14 @@ export function renderRoute(location: string) {
   const screen = render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </QueryClientProvider>
+    </QueryClientProvider>,
   )
+  return { user, ...screen }
+}
+
+export function renderComponent(component: React.ReactNode) {
+  const user = userEvent.setup()
+  const screen = render(component)
+
   return { user, ...screen }
 }
